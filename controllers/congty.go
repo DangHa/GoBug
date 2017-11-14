@@ -20,7 +20,7 @@ type CongTyForm struct {
 	TenmienCongTy string `form: "TenMien"`
 }
 
-var keySengrid = "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"
+var keySengrid = "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"
 
 func (this *CongTyController) Get() {
 	this.TplName = "signup.html"

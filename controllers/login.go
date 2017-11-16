@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"GoBug/models"
+	"bugmanage/models"
 
 	"github.com/astaxie/beego"
 )
@@ -16,7 +16,7 @@ type User struct {
 }
 
 func (this *LoginController) Get() {
-	this.TplName = "login.html"
+	this.TplName = "index.html"
 	this.Render()
 }
 
@@ -31,10 +31,14 @@ func (this *LoginController) Login() {
 
 	isValidUser := models.CheckUser(u.Email, u.Password) //Kiem tra mat khau
 
-	if !isValidUser {
+	if isValidUser == 0 {
 		this.Redirect("/", 302)
 		return
 	}
 
-	this.Redirect("/login/", 302)
+	if isValidUser == 1 {
+		this.Redirect("/login/", 302)
+	}
+
+	this.Redirect("/loginAdmin/", 302)
 }

@@ -30,6 +30,11 @@ type Project struct {
 	MieutaProject string `orm:"column(mieutaProject)"`
 }
 
+type User_Project struct {
+	IdUser    int `orm:"column(idUser);pk"`
+	IdProject int `orm:"column(idProject)"`
+}
+
 func init() {
-	orm.RegisterModel(new(User), new(Vaitro), new(CongTy), new(Project))
+	orm.RegisterModel(new(User), new(Vaitro), new(CongTy), new(Project), new(User_Project))
 }

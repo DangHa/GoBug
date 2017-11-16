@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoBug/controllers"
+	"bugmanage/controllers"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
@@ -18,5 +18,6 @@ func main() {
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/login/", &controllers.LoginController{}, "get:Get;post:Login")
 	beego.Router("/signup/", &controllers.CongTyController{}, "get:Get;post:Add;put:Update")
+	beego.Router("/loginAdmin/", &controllers.LoginAdminController{})
 	beego.Run()
 }

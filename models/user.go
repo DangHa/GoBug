@@ -7,24 +7,23 @@ import (
 )
 
 //Kiem tra mat khau cho login
-func CheckUser(email, password string) bool {
+func CheckUser(email, password string) int { // Tra ve  0 - Sai user; 1 - Admin Dang nhap thanh cong; 2 - nhan vien dang nhap thanh cong
 	o := orm.NewOrm()
 
 	var user = User{}
 	err := o.QueryTable("user").Filter("Email", email).Filter("Password", password).One(&user)
 
-	u := User{Email: "132", Password: "223", IdCongTy: 1, Idvaitro: 1}
-	AddUser(u)
-	ct := CongTy{TenmienCongTy: "hdfa", Status: 0}
-	AddCongTy(ct)
 	if err == orm.ErrMultiRows { // Have multiple records
-		return false
+		return 0
 	}
 	if err == orm.ErrNoRows { // No result
-		return false
+		return 0
 	}
 
-	return true
+	if user.Idvaitro == 0 { // Admin
+		return 1
+	}
+	return 2 //Nhan Vien
 }
 
 // Them User

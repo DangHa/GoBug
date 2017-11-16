@@ -6,11 +6,12 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-func CheckCongTy(tenmienCongTy string) bool {
+// Kiem tra co ton tai cong ty khong
+func CheckCongTy(domain string) bool {
 	o := orm.NewOrm()
 
 	var ct = CongTy{}
-	err := o.QueryTable("congty").Filter("tenmienCongTy", tenmienCongTy).One(&ct)
+	err := o.QueryTable("congty").Filter("tenmienCongTy", domain).One(&ct)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return false
@@ -22,6 +23,24 @@ func CheckCongTy(tenmienCongTy string) bool {
 	return true
 }
 
+// Tim cong ty -1 la ko thay
+func FindCongTy(domain string) int {
+	o := orm.NewOrm()
+
+	var ct = CongTy{}
+	err := o.QueryTable("congty").Filter("tenmienCongTy", domain).One(&ct)
+
+	if err == orm.ErrMultiRows { // Have multiple records
+		return -1
+	}
+	if err == orm.ErrNoRows { // No result
+		return -1
+	}
+
+	return ct.Id
+}
+
+// Them Cong ty
 func AddCongTy(ct CongTy) { //Tra ve
 	o := orm.NewOrm()
 
@@ -37,6 +56,7 @@ func AddCongTy(ct CongTy) { //Tra ve
 	fmt.Println("Successful add!,", id)
 }
 
+// Update
 func UpdateCongTy(tenmienCongTy string, status int) {
 	o := orm.NewOrm()
 

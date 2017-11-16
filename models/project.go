@@ -39,5 +39,15 @@ func AddProject(pj Project) {
 }
 
 func UpdateProject(pj Project) {
+	o := orm.NewOrm()
 
+	id, err := o.QueryTable("project").Filter("tenProject", pj.TenProject).Update(orm.Params{
+		"mieutaProject": pj.MieutaProject, //Trang thai master gui 1 - chap nhan; 2 - tu choi
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("Successful update!,", id)
 }

@@ -1,22 +1,21 @@
 package models
 
 import (
-	"fmt"
-
 	"github.com/astaxie/beego/orm"
 )
 
-func AddVaitro() {
+func CheckAdmin(id int) bool {
 	o := orm.NewOrm()
 
-	var vt Vaitro
-	vt.Tenvaitro = "3"
+	var vt = Vaitro{}
+	err := o.QueryTable("vai_tro").Filter("Id", id).One(&vt)
 
-	id, err := o.Insert(&vt)
-	fmt.Printf("ID: %d, ERR: %v\n", id, err)
-	if err == nil {
-		fmt.Println(id)
-		return
+	if err == orm.ErrMultiRows { // Have multiple records
+		return false
+	}
+	if err == orm.ErrNoRows { // No result
+		return false
 	}
 
+	return true
 }

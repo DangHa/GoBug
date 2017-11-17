@@ -44,14 +44,15 @@ func FindCongTy(domain string) int {
 func AddCongTy(ct CongTy) { //Tra ve
 	o := orm.NewOrm()
 
-	//qs := o.QueryTable("congty")
-	id, err := o.Insert(&ct)
+	qs := o.QueryTable("cong_ty")
+	i, _ := qs.PrepareInsert()
+	id, err := i.Insert(&ct)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	//i.Close()
+	i.Close()
 
 	fmt.Println("Successful add!,", id)
 }
@@ -82,20 +83,27 @@ func DeleteCongTy(tenmienCongTy string) {
 	fmt.Println("Done!")
 }
 
-func FindCongTyTheoStatus(s int) []string { // 0 - la chua hoat dong, 1 - la da hoat dong
+type Domain_Email struct {
+	Email  string
+	Domain string
+}
+
+// Dung cho Master
+func FindCongTyTheoStatus(s int) []Domain_Email { // 0 - la chua hoat dong, 1 - la da hoat dong
 	o := orm.NewOrm()
 
 	var ct []*CongTy
 	num, err := o.QueryTable("cong_ty").Filter("status", s).All(&ct)
 	if err == orm.ErrNoRows { // No result
-		return []string{}
+		return nil
 	}
 
-	names := make([]string, num, num)
-
+	domains := make([]Domain_Email, 0, num)
 	for i := 0; i < len(ct); i++ {
-		names[i] = (*ct[i]).TenmienCongTy
+		email := FindUserWithIdCongTy((*ct[i]).Id)
+		domain := Domain_Email{Domain: (*ct[i]).TenmienCongTy, Email: email}
+		domains = append(domains, domain)
 	}
 
-	return names
+	return domains
 }

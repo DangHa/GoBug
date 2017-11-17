@@ -37,8 +37,8 @@ func (this *LoginController) Login() {
 	}
 
 	if isValidUser == 1 {
-		this.Redirect("/login/", 302)
+		this.Redirect("/loginAdmin/", 302)
 	}
 
-	this.Redirect("/loginAdmin/", 302)
+	this.Redirect("/login/", 302)
 }

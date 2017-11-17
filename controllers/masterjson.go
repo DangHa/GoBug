@@ -14,13 +14,7 @@ type MasterJsonController struct {
 
 func (this *MasterJsonController) Get() {
 
-	ct := models.FindCongTyTheoStatus(0)
-
-	type jsonDomain struct {
-		Domain []string
-	}
-
-	var jso = jsonDomain{Domain: ct}
+	jso := models.FindCongTyTheoStatus(0)
 
 	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200
 	if err != nil {

@@ -2,20 +2,13 @@ package controllers
 
 import (
 	"bugmanage/models"
-	"fmt"
-	"log"
 
 	"github.com/astaxie/beego"
-	sendgrid "github.com/sendgrid/sendgrid-go"
-	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
 type CongTyController struct {
 	beego.Controller
 }
-
-var keySengrid = "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"
-var MasterEmail = "tj.hadv@hblab.com"
 
 type CongTyForm struct {
 	Email  string `form: "Email"`
@@ -41,25 +34,20 @@ func (this *CongTyController) Add() {
 	var ct = models.CongTy{TenmienCongTy: ctForm.Domain, Status: 0} // Add 1 cong ty o trang thai  0-Cho chap nhan cua master
 	models.AddCongTy(ct)
 
+	//Tao them 1 User la admin cua cong ty
+	idCongty := models.FindCongTy(ctForm.Domain)                                                         // Tim idCongty vua roi
+	admin := models.User{Email: ctForm.Email, Password: "1", IdCongTy: idCongty, Idvaitro: 0, Status: 0} // Password: 1 , vaitro: 0-admin
+	models.AddUser(admin)
+
 	//Gui email cho Master (tj.hadv@hblab.vn) cho ket qua
-	from := mail.NewEmail("BugManage", "daxua997@gmail.com")
+	from := "daxua997@gmail.com"
+	to := "tj.hadv@hblab.vn"
 	subject := "Yeu cau them cong ty"
-	to := mail.NewEmail("Master", "tj.hadv@hblab.vn")
-	plainTextContent := "Email: " + ctForm.Email + "Ten Mien Cong Ty: " + ctForm.Domain
 	htmlContent := "<strong>Email: </strong>" + ctForm.Email + "<br>" + "<strong>Ten Mien Cong Ty: </strong>" + ctForm.Domain +
 		"<br>" +
-		"<a herf=\"http://localhost:8080/master/\">Master Form<a>"
+		"<a href=\"http://localhost:8080/masterlogin/\">Master Form<a>"
 
-	message := mail.NewSingleEmail(from, subject, to, plainTextContent, htmlContent)
-	client := sendgrid.NewSendClient(keySengrid)
-	response, err := client.Send(message)
-	if err != nil {
-		log.Println(err)
-	} else {
-		fmt.Println(response.StatusCode)
-		fmt.Println(response.Body)
-		fmt.Println(response.Headers)
-	}
+	SendMail(from, to, subject, htmlContent)
 
 	this.Redirect("/signup/", 302)
 }

@@ -15,16 +15,18 @@ func init() {
 }
 
 func main() {
-	// Danh cho master
-	beego.Router("/masterlogin/", &controllers.MasterLoginController{}, "get:Get;post:Login")
-	beego.Router("/master/", &controllers.MasterController{}, "get:Get;put:Update;delete:Delete")
-	beego.Router("/mastergetjson/", &controllers.MasterJsonController{}, "get:Get")
 
-	// Danh cho user va admin
+	// Danh cho user (login thi co admin chung)
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/login/", &controllers.LoginController{}, "get:Get;post:Login")
 	beego.Router("/signup/", &controllers.CongTyController{}, "get:Get;post:Add")
 
+	// Danh cho Admin
 	beego.Router("/loginAdmin/", &controllers.LoginAdminController{})
+
+	// Danh cho master
+	beego.Router("/masterlogin/", &controllers.MasterLoginController{}, "get:Get;post:Login")
+	beego.Router("/master/", &controllers.MasterController{}, "get:Get;put:Update;delete:Delete")
+	beego.Router("/mastergetjson/", &controllers.MasterJsonController{}, "get:Get")
 	beego.Run()
 }

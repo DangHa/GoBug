@@ -26,20 +26,16 @@ func (this *MasterLoginController) Login() {
 	u := Master{}
 
 	if err := this.ParseForm(&u); err != nil {
-		this.Redirect("/", 302)
+		this.Redirect("/masterlogin/", 302)
 		return
 	}
 
-	isValidUser := models.CheckUser(u.Email, u.Password) //Kiem tra mat khau
+	isValidUser := models.CheckMaster(u.Email, u.Password) //Kiem tra mat khau
 
-	if isValidUser == 0 {
-		this.Redirect("/", 302)
+	if !isValidUser {
+		this.Redirect("/masterlogin/", 302)
 		return
 	}
 
-	if isValidUser == 1 {
-		this.Redirect("/login/", 302)
-	}
-
-	this.Redirect("/loginAdmin/", 302)
+	this.Redirect("/master/", 302)
 }

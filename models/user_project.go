@@ -57,7 +57,7 @@ func FindUser(idProject int) []int {
 	return idusers
 }
 
-func DeleteUser(idUser, idProject int) {
+func DeleteUserKhoiProject(idUser, idProject int) {
 	o := orm.NewOrm()
 
 	_, err := o.QueryTable("user_project").Filter("idUser", idUser).Filter("idProject", idProject).Delete()
@@ -65,4 +65,5 @@ func DeleteUser(idUser, idProject int) {
 		fmt.Println(err)
 	}
 
+	fmt.Println("Done!")
 }

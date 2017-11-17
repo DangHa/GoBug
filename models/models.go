@@ -35,6 +35,12 @@ type User_Project struct {
 	IdProject int `orm:"column(idProject)"`
 }
 
+type Master struct {
+	Id       int    `orm:"column(idmaster);null"`
+	Email    string `orm:"column(email)"`
+	Password string `orm:"column(password)"`
+}
+
 func init() {
 	orm.RegisterModel(new(User), new(Vaitro), new(CongTy), new(Project), new(User_Project))
 }

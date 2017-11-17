@@ -28,7 +28,7 @@ func FindCongTy(domain string) int {
 	o := orm.NewOrm()
 
 	var ct = CongTy{}
-	err := o.QueryTable("congty").Filter("tenmienCongTy", domain).One(&ct)
+	err := o.QueryTable("cong_ty").Filter("tenmienCongTy", domain).One(&ct)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return -1
@@ -60,7 +60,7 @@ func AddCongTy(ct CongTy) { //Tra ve
 func UpdateCongTy(tenmienCongTy string, status int) {
 	o := orm.NewOrm()
 
-	id, err := o.QueryTable("user").Filter("tenmienCongTy", tenmienCongTy).Update(orm.Params{
+	id, err := o.QueryTable("cong_ty").Filter("tenmienCongTy", tenmienCongTy).Update(orm.Params{
 		"status": status, //Trang thai master gui 1 - chap nhan; 2 - tu choi
 	})
 	if err != nil {
@@ -69,4 +69,33 @@ func UpdateCongTy(tenmienCongTy string, status int) {
 	}
 
 	fmt.Println("Successful update!,", id)
+}
+
+func DeleteCongTy(tenmienCongTy string) {
+	o := orm.NewOrm()
+
+	_, err := o.QueryTable("cong_ty").Filter("tenmienCongTy", tenmienCongTy).Delete()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println("Done!")
+}
+
+func FindCongTyTheoStatus(s int) []string { // 0 - la chua hoat dong, 1 - la da hoat dong
+	o := orm.NewOrm()
+
+	var ct []*CongTy
+	num, err := o.QueryTable("cong_ty").Filter("status", s).All(&ct)
+	if err == orm.ErrNoRows { // No result
+		return []string{}
+	}
+
+	names := make([]string, num, num)
+
+	for i := 0; i < len(ct); i++ {
+		names[i] = (*ct[i]).TenmienCongTy
+	}
+
+	return names
 }

@@ -1,5 +1,5 @@
 
-function CreateMemberTableFromJSON(data) {
+function CreateDomainTableFromJSON(data) {
 
   // Header
   var col = ["Domain","Email"];
@@ -26,11 +26,33 @@ function CreateMemberTableFromJSON(data) {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i][colJSON[j]];
       }
+
+  }
+
+
+  // Set onclick cho tung dong
+  for (var i = 1; i < table.rows.length; i++) {
+    table.rows[i].onclick = function(){
+
+      document.getElementById("email").value = this.cells[1].innerHTML;
+      document.getElementById("domain").value = this.cells[0].innerHTML;
+
+      for (var j = 1; j < table.rows.length; j++){
+        if (j === this.rowIndex) {
+          this.style.color = "blue"
+        }else{
+          table.rows[j].style.color = "black"
+        }
+      }
+
+
+    };
+
   }
 
 }
 
-function Put() {
+function PutDomain(number) {
   var email = document.getElementById('email').value
   var domain = document.getElementById('domain').value
 
@@ -43,7 +65,7 @@ function Put() {
   location.reload();
 }
 
-function Delete() {
+function DeleteDomain() {
   var email = document.getElementById('email').value
   var domain = document.getElementById('domain').value
 
@@ -57,12 +79,13 @@ function Delete() {
   location.reload();
 }
 
+
 $( document ).ready(function() {
   //Get JSON
-  var url = 'http://localhost:8080/mastergetjson/'
+  var url = document.getElementById('url').value
   $.getJSON(url, function(data){
     console.log("It Worked!");
-    CreateMemberTableFromJSON(data)
+    CreateDomainTableFromJSON(data)
     console.log(data);
   })
 

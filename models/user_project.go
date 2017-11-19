@@ -22,20 +22,23 @@ func AddUser_Project(up User_Project) {
 }
 
 //Dang sua
-func FindProject(idUser int) int {
+func FindProject(idUser int) []int {
 	o := orm.NewOrm()
 
-	var up = User_Project{}
-	err := o.QueryTable("user_project").Filter("idUser", idUser).One(&up)
+	var up []*User_Project
+	num, err := o.QueryTable("user_project").Filter("idUser", idUser).All(&up)
 
-	if err == orm.ErrMultiRows { // Have multiple records
-		return -1
-	}
 	if err == orm.ErrNoRows { // No result
-		return -1
+		return nil
 	}
 
-	return up.IdProject
+	idusers := make([]int, num, num)
+
+	for i := 0; i < len(up); i++ {
+		idusers[i] = (*up[i]).IdUser
+	}
+
+	return idusers
 }
 
 func FindUser(idProject int) []int {

@@ -34,7 +34,7 @@ func CheckUser(email, password string) int { // Tra ve  0 - Sai user; 1 - Admin 
 func UpdateUser(email string) {
 	o := orm.NewOrm()
 
-	id, err := o.QueryTable("user").Filter("Email", email).Update(orm.Params{
+	id, err := o.QueryTable("user").Filter("email", email).Update(orm.Params{
 		"status": 1, // 0 - bi khoa, 1 - hoat dong
 	})
 	if err != nil {

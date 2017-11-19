@@ -16,7 +16,6 @@ type MasterController struct {
 func (this *MasterController) Get() {
 	this.TplName = "master/master.html"
 	this.Render()
-	return
 }
 
 // Put
@@ -28,8 +27,6 @@ func (this *MasterController) Update() {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	fmt.Println(ctForm.Email, ctForm.Domain)
 
 	//Tao them 1 User la admin cua cong ty
 	models.UpdateUser(ctForm.Email)

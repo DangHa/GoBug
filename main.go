@@ -5,6 +5,7 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"github.com/astaxie/beego/session"
 )
 
 func init() {
@@ -16,6 +17,14 @@ func init() {
 
 func main() {
 
+	// SessionID
+	sessionconf := &session.ManagerConfig{
+		CookieName: "bugmanageID",
+		Gclifetime: 3600,
+	}
+	beego.GlobalSessions, _ = session.NewManager("memory", sessionconf)
+	go beego.GlobalSessions.GC()
+
 	// Danh cho user (login thi co admin chung)
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/login/", &controllers.LoginController{}, "get:Get;post:Login")
@@ -23,10 +32,13 @@ func main() {
 
 	// Danh cho Admin
 	beego.Router("/loginAdmin/", &controllers.LoginAdminController{})
+	beego.Router("/adminprojectjson/", &controllers.AdminProjectJsonController{}, "get:Get;post:Post;put:Update;delete:Delete")
 
 	// Danh cho master
 	beego.Router("/masterlogin/", &controllers.MasterLoginController{}, "get:Get;post:Login")
 	beego.Router("/master/", &controllers.MasterController{}, "get:Get;put:Update;delete:Delete")
 	beego.Router("/mastergetjson/", &controllers.MasterJsonController{}, "get:Get")
+	beego.Router("/masteractive/", &controllers.MasterJsonActiveController{}, "get:Get")
+	beego.Router("/mastergetjsoncongty/", &controllers.MasterJsonCongTyController{}, "get:Get")
 	beego.Run()
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-func AddUser_Project(up User_Project) {
+func AddUser_Project(up User_project) {
 	o := orm.NewOrm()
 
 	//qs := o.QueryTable("congty")
@@ -25,26 +25,26 @@ func AddUser_Project(up User_Project) {
 func FindProject(idUser int) []int {
 	o := orm.NewOrm()
 
-	var up []*User_Project
+	var up []*User_project
 	num, err := o.QueryTable("user_project").Filter("idUser", idUser).All(&up)
 
 	if err == orm.ErrNoRows { // No result
 		return nil
 	}
 
-	idusers := make([]int, num, num)
+	idproject := make([]int, num, num)
 
 	for i := 0; i < len(up); i++ {
-		idusers[i] = (*up[i]).IdUser
+		idproject[i] = (*up[i]).IdProject
 	}
 
-	return idusers
+	return idproject
 }
 
 func FindUser(idProject int) []int {
 	o := orm.NewOrm()
 
-	var up []*User_Project
+	var up []*User_project
 	num, err := o.QueryTable("user_project").Filter("idProject", idProject).All(&up)
 
 	if err == orm.ErrNoRows { // No result

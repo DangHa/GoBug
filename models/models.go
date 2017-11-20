@@ -31,7 +31,7 @@ type Project struct {
 	MieutaProject string `orm:"column(mieutaProject)"`
 }
 
-type User_Project struct {
+type User_project struct {
 	IdUser    int `orm:"column(idUser);pk"`
 	IdProject int `orm:"column(idProject)"`
 }
@@ -43,5 +43,5 @@ type Master struct {
 }
 
 func init() {
-	orm.RegisterModel(new(User), new(Vaitro), new(CongTy), new(Project), new(User_Project), new(Master))
+	orm.RegisterModel(new(User), new(Vaitro), new(CongTy), new(Project), new(User_project), new(Master))
 }

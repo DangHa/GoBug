@@ -1,8 +1,8 @@
 function CreateProjectTableFromJSON(data) {
 
   // Header
-  var col = ["Project","Developer", "Tester", "Bug"];
-  var colJSON = ["Project", "Developer", "Tester", "Bug"]; // de dong bo voi du lieu JSON
+  var col = ["#", "Project", "Description"];
+  var colJSON = ["Id", "TenProject", "MieutaProject"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("projectTable");
@@ -26,10 +26,32 @@ function CreateProjectTableFromJSON(data) {
           tabCell.innerHTML = data[i][colJSON[j]];
       }
   }
+
+  // Set onclick cho tung dong
+  for (var i = 1; i < table.rows.length; i++) {
+    table.rows[i].onclick = function(){
+
+      document.getElementById("id").value = this.cell[0].innerHTML;
+      document.getElementById("project").value = this.cell[1].innerHTML;
+      document.getElementById("desc").value = this.cell[2].innerHTML;
+
+
+      for (var j = 1; j < table.rows.length; j++){
+        if (j === this.rowIndex) {
+          this.style.color = "blue"
+        }else{
+          table.rows[j].style.color = "black"
+        }
+      }
+
+    };
+
+  }
+
 }
 
 function PostProject() {
-  var project = document.getElementById('domain').value
+  var project = document.getElementById('project').value
   var mieuta = document.getElementById('desc').value
 
   var xhr = new XMLHttpRequest();
@@ -43,26 +65,27 @@ function PostProject() {
 }
 
 function PutProject() {
-  var project = document.getElementById('domain').value
+  var id = document.getElementById('id').value
+  var project = document.getElementById('project').value
   var mieuta = document.getElementById('desc').value
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/adminprojectjson/";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Project": project, "Mieuta": mieuta});
+  var data = JSON.stringify({"Id": id, "Project": project, "Mieuta": mieuta});
   xhr.send(data);
   location.reload();
 }
 
 function DeleteProject() {
-  var project = document.getElementById('domain').value
+  var id = document.getElementById('id').value
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/adminprojectjson/";
   xhr.open("DELETE", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Project": project});
+  var data = JSON.stringify({"Id": id});
 
   xhr.send(data);
   location.reload();

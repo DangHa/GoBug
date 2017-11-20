@@ -84,6 +84,8 @@ func FindProjectWithidAdmin(idAdmin int) []Project {
 
 	idProject := FindProject(idAdmin)
 
+	fmt.Println(idProject)
+
 	var pj []Project
 	for i := 0; i < len(idProject); i++ {
 		pj = append(pj, FindProject_Project(idProject[i]))

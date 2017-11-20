@@ -13,9 +13,15 @@ type AdminProjectJsonController struct {
 	beego.Controller
 }
 
+type ProjectJSON struct {
+	Id      int
+	Project string
+	Mieuta  string
+}
+
 func (this *AdminProjectJsonController) Get() {
 
-	jso := models.FindProjectWithidAdmin(1)
+	jso := models.FindProjectWithidAdmin(25) // Luu de xac dinh duoc admin nao dang nhap vao he thong
 
 	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200
 	if err != nil {
@@ -26,11 +32,6 @@ func (this *AdminProjectJsonController) Get() {
 	this.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
 	this.Ctx.Output.Body(resBody)
 	this.ServeJSONP()
-}
-
-type ProjectJSON struct {
-	Project string
-	Mieuta  string
 }
 
 func (this *AdminProjectJsonController) Post() {

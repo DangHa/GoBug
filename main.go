@@ -33,6 +33,8 @@ func main() {
 	// Danh cho Admin
 	beego.Router("/loginAdmin/", &controllers.LoginAdminController{})
 	beego.Router("/adminprojectjson/", &controllers.AdminProjectJsonController{}, "get:Get;post:Post;put:Update;delete:Delete")
+	beego.Router("/adminmember/", &controllers.AdminMemberController{})
+	beego.Router("/adminmemberjson/", &controllers.AdminMemberJsonControllers{})
 
 	// Danh cho master
 	beego.Router("/masterlogin/", &controllers.MasterLoginController{}, "get:Get;post:Login")

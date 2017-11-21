@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Go Bug</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/js/adminProject.js"></script>
+  <head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">GoBug</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:8080/loginAdmin/">ProJect</a></li>
+          <li class="active"><a href="#">Member</a></li>
+          <li><a href="">Statistics</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <table class="table table-hover" id="memberTable"></table><br>
+
+    <hr>
+    <h3> Them nguoi vao cong ty <h3>
+    Member: <input type="text" id="project"  disabled="disabled" /><br>
+    <input type="submit" value="Delete" onclick="DeleteProject()"/>
+    <hr>
+    <h3> Them nguoi vao du an <h3>
+    <input type="hidden" id="id"/>
+    Project: <input type="text" id="new"/><br>
+    Member: <input type="text" id="desc"/>
+    <br>
+    <input type="submit" value="Add" onclick="PostProject()"/>
+    <input type="submit" value="Update" onclick="PutProject()"/>
+
+
+  </body>
+<html>

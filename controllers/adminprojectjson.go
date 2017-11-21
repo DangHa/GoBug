@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/astaxie/beego"
 )
@@ -14,7 +15,7 @@ type AdminProjectJsonController struct {
 }
 
 type ProjectJSON struct {
-	Id      int
+	Id      string
 	Project string
 	Mieuta  string
 }
@@ -55,6 +56,11 @@ func (this *AdminProjectJsonController) Update() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	idint, _ := strconv.Atoi(project.Id)
+	pj := models.Project{Id: idint, TenProject: project.Project, MieutaProject: project.Mieuta}
+	fmt.Println(pj)
+	models.UpdateProject(pj)
 }
 
 func (this *AdminProjectJsonController) Delete() {
@@ -64,4 +70,6 @@ func (this *AdminProjectJsonController) Delete() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println(project)
+	// Xoa tren 2 bang
 }

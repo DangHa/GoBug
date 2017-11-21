@@ -12,12 +12,13 @@ type CongTy struct {
 }
 
 type User struct {
-	Id       int    `orm:"column(idUser);null"`
-	Email    string `orm:"column(email)"`
-	Password string `orm:"column(password)"`
-	IdCongTy int    `orm:"column(idCongTy)"`
-	Idvaitro int    `orm:"column(idvaitro)"`
-	Status   int    `orm:"column(status)"`
+	Id       int        `orm:"column(idUser);null"`
+	Email    string     `orm:"column(email)"`
+	Password string     `orm:"column(password)"`
+	IdCongTy int        `orm:"column(idCongTy)"`
+	Idvaitro int        `orm:"column(idvaitro)"`
+	Status   int        `orm:"column(status)"`
+	Project  []*Project `orm:"rel(m2m)"`
 }
 
 type Vaitro struct {
@@ -26,9 +27,10 @@ type Vaitro struct {
 }
 
 type Project struct {
-	Id            int    `orm:"column(idProject);null"`
-	TenProject    string `orm:"column(tenProject)"`
-	MieutaProject string `orm:"column(mieutaProject)"`
+	Id            int     `orm:"column(idProject);null"`
+	TenProject    string  `orm:"column(tenProject)"`
+	MieutaProject string  `orm:"column(mieutaProject)"`
+	User          []*User `orm:"reverse(many)"`
 }
 
 type User_project struct {

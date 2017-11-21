@@ -2,7 +2,6 @@ package models
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/astaxie/beego/orm"
 )
@@ -45,23 +44,8 @@ func AddProject(pj Project, idadmin int) {
 		return
 	}
 
-	// Tim User (admin)
-	var u User
-	err = o.QueryTable("project").Filter("idUser", idadmin).One(&u)
-	if err == orm.ErrMultiRows { // Have multiple records
-		return
-	}
-	if err == orm.ErrNoRows { // No result
-		return
-	}
-
-	m2m := o.QueryM2M(&pj, "project")
-	num, err := m2m.Add(u)
-	if err == nil {
-		log.Printf("Added nums: %v", num)
-	}
-
-	// Tao ket noi cua admin voi project vua duoc tao
+	up := User_project{IdUser: idadmin, IdProject: pj.Id}
+	AddUser_Project(up)
 
 	fmt.Println("Successful add!,", id)
 }
@@ -81,10 +65,12 @@ func UpdateProject(pj Project) {
 	fmt.Println("Successful update!,", id)
 }
 
-func DeleteProject(domain string) {
+func DeleteProject(idproject int, idadmin int) {
 	o := orm.NewOrm()
 
-	_, err := o.QueryTable("project").Filter("tenProject", domain).Delete()
+	DeleteUserKhoiProject(idadmin, idproject)
+
+	_, err := o.QueryTable("project").Filter("idProject", idproject).Delete()
 	if err != nil {
 		fmt.Println(err)
 	}

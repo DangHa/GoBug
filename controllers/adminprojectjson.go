@@ -59,7 +59,7 @@ func (this *AdminProjectJsonController) Update() {
 
 	idint, _ := strconv.Atoi(project.Id)
 	pj := models.Project{Id: idint, TenProject: project.Project, MieutaProject: project.Mieuta}
-	fmt.Println(pj)
+
 	models.UpdateProject(pj)
 }
 
@@ -70,6 +70,8 @@ func (this *AdminProjectJsonController) Delete() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(project)
-	// Xoa tren 2 bang
+
+	idpro, _ := strconv.Atoi(project.Id)
+	models.DeleteProject(idpro, 25)
+
 }

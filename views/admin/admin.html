@@ -25,16 +25,26 @@
     <table class="table table-hover" id="projectTable"></table><br>
 
     <hr>
-    Selected: <input type="text" id="project"  disabled="disabled" /><br>
-    <input type="submit" value="Delete" onclick="DeleteProject()"/>
-    <hr>
-    <input type="hidden" id="id"/>
-    New project name: <input type="text" id="new"/><br>
-    New Description: <input type="text" id="desc"/>
-    <br>
-    <input type="submit" value="Add" onclick="PostProject()"/>
-    <input type="submit" value="Update" onclick="PutProject()"/>
 
+    <input type="hidden" id="id"/>
+    <input type="submit" value="Add project" onclick="Add()"/>
+    <input type="submit" value="Update project" onclick="Update()"/>
+    <input type="submit" value="Delte project" onclick="Delete()"/>
+    <br>
+    <hr>
+    
+    <div style="display: none;" id="deAndup">
+      Selected: <input type="text" id="project"  disabled="disabled" /><br>
+    </div>
+    <input type="submit" value="Delete" onclick="DeleteProject()" style="display: none;" id="de"/>
+
+    <div style="display: none;" id="adAndup">
+      New project name: <input type="text" id="new"/><br>
+      New Description: <input type="text" id="desc"/>
+    </div>
+
+    <input type="submit" value="Update" onclick="PutProject()" style="display: none;" id="up"/>
+    <input type="submit" value="Add" onclick="PostProject()" style="display: none;" id="ad"/>
 
   </body>
 <html>

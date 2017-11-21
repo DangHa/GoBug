@@ -54,6 +54,33 @@ function CreateProjectTableFromJSON(data) {
 
 }
 
+function Add() {
+  document.getElementById("adAndup").style.display = "block";
+  document.getElementById("ad").style.display = "block";
+  //hide
+  document.getElementById("de").style.display = "none";
+  document.getElementById("up").style.display = "none";
+  document.getElementById("deAndup").style.display = "none";
+}
+
+function Update() {
+  document.getElementById("deAndup").style.display = "block";
+  document.getElementById("adAndup").style.display = "block";
+  document.getElementById("up").style.display = "block";
+  //hide
+  document.getElementById("de").style.display = "none";
+  document.getElementById("ad").style.display = "none";
+}
+
+function Delete() {
+  document.getElementById("deAndup").style.display = "block";
+  document.getElementById("de").style.display = "block";
+  //hile
+  document.getElementById("ad").style.display = "none";
+  document.getElementById("up").style.display = "none";
+  document.getElementById("adAndup").style.display = "none";
+}
+
 function PostProject() {
   var project = document.getElementById('new').value
   var mieuta = document.getElementById('desc').value

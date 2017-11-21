@@ -24,7 +24,14 @@ function CreateProjectTableFromJSON(data) {
       for (var j = 0; j < col.length; j++) {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i][colJSON[j]];
+          tabCell.contentEditable =true;
       }
+
+      var tabCell = tr.insertCell(-1);
+      tabCell.innerHTML = '<input type="submit" value="Update" onclick="PutProject()"/>'
+
+      var tabCell1 = tr.insertCell(-1);
+      tabCell1.innerHTML = '<input type="submit" value="Delete" onclick="DeleteProject()"/>'
   }
 
   // hide column 1
@@ -35,50 +42,23 @@ function CreateProjectTableFromJSON(data) {
 
   // Set onclick cho tung dong
   for (var i = 1; i < table.rows.length; i++) {
-    table.rows[i].onclick = function(){
+    table.rows[i].onmouseover = function(){
 
       document.getElementById("id").value = this.cells[0].innerHTML;
       document.getElementById("project").value = this.cells[1].innerHTML;
+      document.getElementById('mieuta').value = this.cells[2].innerHTML;
 
-      for (var j = 1; j < table.rows.length; j++){
-        if (j === this.rowIndex) {
-          this.style.color = "blue"
-        }else{
-          table.rows[j].style.color = "black"
-        }
-      }
-
+      this.style.color = "blue";
+    };
+    table.rows[i].onmouseout = function(){
+      document.getElementById("id").value = "";
+      document.getElementById("project").value = "";
+      document.getElementById('mieuta').value = "";
+      this.style.color = "black";
     };
 
   }
 
-}
-
-function Add() {
-  document.getElementById("adAndup").style.display = "block";
-  document.getElementById("ad").style.display = "block";
-  //hide
-  document.getElementById("de").style.display = "none";
-  document.getElementById("up").style.display = "none";
-  document.getElementById("deAndup").style.display = "none";
-}
-
-function Update() {
-  document.getElementById("deAndup").style.display = "block";
-  document.getElementById("adAndup").style.display = "block";
-  document.getElementById("up").style.display = "block";
-  //hide
-  document.getElementById("de").style.display = "none";
-  document.getElementById("ad").style.display = "none";
-}
-
-function Delete() {
-  document.getElementById("deAndup").style.display = "block";
-  document.getElementById("de").style.display = "block";
-  //hile
-  document.getElementById("ad").style.display = "none";
-  document.getElementById("up").style.display = "none";
-  document.getElementById("adAndup").style.display = "none";
 }
 
 function PostProject() {
@@ -97,8 +77,8 @@ function PostProject() {
 
 function PutProject() {
   var id = document.getElementById('id').value
-  var project = document.getElementById('new').value
-  var mieuta = document.getElementById('desc').value
+  var project = document.getElementById('project').value
+  var mieuta = document.getElementById('mieuta').value
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/adminprojectjson/";

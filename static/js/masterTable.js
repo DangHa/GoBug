@@ -42,13 +42,14 @@ function CreateDomainTableFromJSON(data) {
       document.getElementById("email").value = this.cells[1].innerHTML;
       document.getElementById("domain").value = this.cells[0].innerHTML;
 
-      for (var j = 1; j < table.rows.length; j++){
-        if (j === this.rowIndex) {
-          this.style.color = "blue"
-        }else{
-          table.rows[j].style.color = "black"
-        }
-      }
+      this.style.color = "blue"
+    };
+    table.rows[i].onmouseout = function(){
+
+      document.getElementById("email").value = "";
+      document.getElementById("domain").value = "";
+
+      this.style.color = "black"
     };
   }
 

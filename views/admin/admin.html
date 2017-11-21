@@ -27,24 +27,12 @@
     <hr>
 
     <input type="hidden" id="id"/>
-    <input type="submit" value="Add project" onclick="Add()"/>
-    <input type="submit" value="Update project" onclick="Update()"/>
-    <input type="submit" value="Delete project" onclick="Delete()"/>
-    <br>
-    <hr>
+    <input type="hidden" id="project"/>
+    <input type="hidden" id="mieuta"/>
 
-    <div style="display: none;" id="deAndup">
-      Selected: <input type="text" id="project"  disabled="disabled" /><br>
-    </div>
-    <input type="submit" value="Delete" onclick="DeleteProject()" style="display: none;" id="de"/>
+    New project name: <input type="text" id="new"/><br>
+    New Description: <input type="text" id="desc"/><br>
 
-    <div style="display: none;" id="adAndup">
-      New project name: <input type="text" id="new"/><br>
-      New Description: <input type="text" id="desc"/>
-    </div>
-
-    <input type="submit" value="Update" onclick="PutProject()" style="display: none;" id="up"/>
-    <input type="submit" value="Add" onclick="PostProject()" style="display: none;" id="ad"/>
-
+    <input type="submit" value="Add" onclick="PostProject()"/>
   </body>
 <html>

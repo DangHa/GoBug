@@ -29,7 +29,6 @@ function CreateDomainTableFromJSON(data) {
 
   }
 
-
   // Set onclick cho tung dong
   for (var i = 1; i < table.rows.length; i++) {
     table.rows[i].onclick = function(){

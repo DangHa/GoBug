@@ -9,14 +9,15 @@ import (
 func AddUser_Project(up User_project) {
 	o := orm.NewOrm()
 
-	//qs := o.QueryTable("congty")
-	id, err := o.Insert(&up)
+	qs := o.QueryTable("user_project")
+	i, _ := qs.PrepareInsert()
+	id, err := i.Insert(&up)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	//i.Close()
+	i.Close()
 
 	fmt.Println("Successful add!,", id)
 }

@@ -27,14 +27,18 @@ function CreateProjectTableFromJSON(data) {
       }
   }
 
+  // hide column 1
+  for (var i=0; i<table.rows.length; i++){
+        table.rows[i].cells[0].style.display = "none";
+  }
+
+
   // Set onclick cho tung dong
   for (var i = 1; i < table.rows.length; i++) {
     table.rows[i].onclick = function(){
 
-      document.getElementById("id").value = this.cell[0].innerHTML;
-      document.getElementById("project").value = this.cell[1].innerHTML;
-      document.getElementById("desc").value = this.cell[2].innerHTML;
-
+      document.getElementById("id").value = this.cells[0].innerHTML;
+      document.getElementById("project").value = this.cells[1].innerHTML;
 
       for (var j = 1; j < table.rows.length; j++){
         if (j === this.rowIndex) {
@@ -51,7 +55,7 @@ function CreateProjectTableFromJSON(data) {
 }
 
 function PostProject() {
-  var project = document.getElementById('project').value
+  var project = document.getElementById('new').value
   var mieuta = document.getElementById('desc').value
 
   var xhr = new XMLHttpRequest();
@@ -66,7 +70,7 @@ function PostProject() {
 
 function PutProject() {
   var id = document.getElementById('id').value
-  var project = document.getElementById('project').value
+  var project = document.getElementById('new').value
   var mieuta = document.getElementById('desc').value
 
   var xhr = new XMLHttpRequest();

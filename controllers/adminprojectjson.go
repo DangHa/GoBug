@@ -37,12 +37,15 @@ func (this *AdminProjectJsonController) Get() {
 func (this *AdminProjectJsonController) Post() {
 	// JSON chuyen ve tu master html
 	project := ProjectJSON{}
+
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &project)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Println(project.Project)
+	newProject := models.Project{TenProject: project.Project, MieutaProject: project.Mieuta}
+
+	models.AddProject(newProject, 25) // Can co IDAdmin o sessionID
 }
 
 func (this *AdminProjectJsonController) Update() {

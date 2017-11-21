@@ -22,7 +22,7 @@ func CheckProject(tenProject string) bool {
 	return true
 }
 
-func AddProject(pj Project) {
+func AddProject(pj Project, idadmin int) {
 	o := orm.NewOrm()
 
 	qs := o.QueryTable("project")
@@ -34,6 +34,21 @@ func AddProject(pj Project) {
 	}
 
 	i.Close()
+
+	// Tim id cua project vua them
+	err = o.QueryTable("project").Filter("tenProject", pj.TenProject).One(&pj)
+	if err == orm.ErrMultiRows { // Have multiple records
+		return
+	}
+	if err == orm.ErrNoRows { // No result
+		return
+	}
+
+	fmt.Println(pj.TenProject, pj.Id, idadmin)
+
+	// Tao ket noi cua admin voi project vua duoc tao
+	up := User_project{IdUser: pj.Id, IdProject: idadmin}
+	AddUser_Project(up)
 
 	fmt.Println("Successful add!,", id)
 }
@@ -83,8 +98,6 @@ func FindProject_Project(id int) Project {
 func FindProjectWithidAdmin(idAdmin int) []Project {
 
 	idProject := FindProject(idAdmin)
-
-	fmt.Println(idProject)
 
 	var pj []Project
 	for i := 0; i < len(idProject); i++ {

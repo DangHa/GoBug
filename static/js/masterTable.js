@@ -26,12 +26,18 @@ function CreateDomainTableFromJSON(data) {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i][colJSON[j]];
       }
+      var tabCell = tr.insertCell(-1);
+      tabCell.innerHTML = document.getElementById('pu').value;
+
+      var tabCell1 = tr.insertCell(-1);
+      tabCell1.innerHTML = document.getElementById('de').value;
+
 
   }
 
   // Set onclick cho tung dong
   for (var i = 1; i < table.rows.length; i++) {
-    table.rows[i].onclick = function(){
+    table.rows[i].onmouseover = function(){
 
       document.getElementById("email").value = this.cells[1].innerHTML;
       document.getElementById("domain").value = this.cells[0].innerHTML;
@@ -43,14 +49,14 @@ function CreateDomainTableFromJSON(data) {
           table.rows[j].style.color = "black"
         }
       }
-
     };
-
   }
+
 
 }
 
 function PutDomain(number) {
+
   var email = document.getElementById('email').value
   var domain = document.getElementById('domain').value
 

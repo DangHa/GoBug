@@ -20,7 +20,7 @@ type User struct {
 	Status   int    `orm:"column(status)"`
 }
 
-type Vaitro struct {
+type VaiTro struct {
 	Id        int    `orm:"column(idvaitro);null"`
 	Tenvaitro string `orm:"column(tenvaitro)"`
 }
@@ -44,5 +44,5 @@ type Master struct {
 }
 
 func init() {
-	orm.RegisterModel(new(User), new(Vaitro), new(CongTy), new(Project), new(User_project), new(Master))
+	orm.RegisterModel(new(User), new(VaiTro), new(CongTy), new(Project), new(User_project), new(Master))
 }

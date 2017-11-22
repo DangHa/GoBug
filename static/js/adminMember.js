@@ -1,8 +1,8 @@
 function CreateProjectTableFromJSON(data) {
 
   // Header
-  var col = ["#", "Project", "Description"];
-  var colJSON = ["Id", "TenProject", "MieutaProject"]; // de dong bo voi du lieu JSON
+  var col = ["#", "Email", "Position", "Number of project"];
+  var colJSON = ["Id", "Email", "Vaitro", "Number"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("memberTable");
@@ -25,6 +25,8 @@ function CreateProjectTableFromJSON(data) {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i][colJSON[j]];
       }
+      var tabCell1 = tr.insertCell(-1);
+      tabCell1.innerHTML = '<input type="submit" value="Delete" onclick="DeleteProject()"/>'
   }
 
   // hide column 1
@@ -54,12 +56,12 @@ function CreateProjectTableFromJSON(data) {
 
 }
 
-function PostProject() {
+function PostMember() {
   var project = document.getElementById('new').value
-  var mieuta = document.getElementById('desc').value
+  var mieuta = document.getElementById('proj').value
 
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:8080/adminprojectjson/";
+  var url = "http://localhost:8080/adminmemberjson/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   var data = JSON.stringify({"Project": project, "Mieuta": mieuta});
@@ -68,13 +70,13 @@ function PostProject() {
   location.reload();
 }
 
-function PutProject() {
+function PutMember() {
   var id = document.getElementById('id').value
   var project = document.getElementById('new').value
   var mieuta = document.getElementById('desc').value
 
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:8080/adminprojectjson/";
+  var url = "http://localhost:8080/adminmemberjson/";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   var data = JSON.stringify({"Id": id, "Project": project, "Mieuta": mieuta});
@@ -82,11 +84,11 @@ function PutProject() {
   location.reload();
 }
 
-function DeleteProject() {
+function DeleteMember() {
   var id = document.getElementById('id').value
 
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:8080/adminprojectjson/";
+  var url = "http://localhost:8080/adminmemberjson/";
   xhr.open("DELETE", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   var data = JSON.stringify({"Id": id});
@@ -98,7 +100,7 @@ function DeleteProject() {
 
 $( document ).ready(function() {
   //Get JSON
-  var url = 'http://localhost:8080/adminprojectjson/'
+  var url = 'http://localhost:8080/adminmemberjson/'
   $.getJSON(url, function(data){
     console.log("It Worked!");
     CreateProjectTableFromJSON(data)

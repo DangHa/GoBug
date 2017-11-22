@@ -34,7 +34,7 @@ func main() {
 	beego.Router("/loginAdmin/", &controllers.LoginAdminController{})
 	beego.Router("/adminprojectjson/", &controllers.AdminProjectJsonController{}, "get:Get;post:Post;put:Update;delete:Delete")
 	beego.Router("/adminmember/", &controllers.AdminMemberController{})
-	beego.Router("/adminmemberjson/", &controllers.AdminMemberJsonControllers{})
+	beego.Router("/adminmemberjson/", &controllers.AdminMemberJsonControllers{}, "get:Get;post:Post;delete:Delete")
 
 	// Danh cho master
 	beego.Router("/masterlogin/", &controllers.MasterLoginController{}, "get:Get;post:Login")

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="../static/js/adminProject.js"></script>
+    <script src="../static/js/adminMember.js"></script>
   <head>
 
   <body>
@@ -25,18 +25,22 @@
     <table class="table table-hover" id="memberTable"></table><br>
 
     <hr>
-    <p> Them nguoi vao cong ty <p>
-    Member: <input type="text" id="project"  disabled="disabled" /><br>
-    <input type="submit" value="Delete" onclick="DeleteProject()"/>
-    <hr>
-    <p> Them nguoi vao du an <p>
+
     <input type="hidden" id="id"/>
-    Project: <input type="text" id="new"/><br>
-    Member: <input type="text" id="desc"/>
-    <br>
-    <input type="submit" value="Add" onclick="PostProject()"/>
-    <input type="submit" value="Update" onclick="PutProject()"/>
+    <input type="hidden" id="name"/>
+    <input type="hidden" id="soproject"/>
 
+    <div style="display: none" align="center">
+      <textarea disabled rows="4" cols="50" id="lietkeProject">
+      </textarea>
+      <hr>
+    </div>
 
+    New member email: <input type="text" id="new"/><br>
+    Position: <select id="pos">
+      <option value=”Developer″>Developer</option>
+      <option value=”Tester″>Tester</option>
+    </select><br>
+    <input type="submit" value="Add" onclick="PostMember()"/>
   </body>
 <html>

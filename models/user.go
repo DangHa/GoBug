@@ -45,6 +45,20 @@ func UpdateUser(email string) {
 	fmt.Println("Successful update!,", id)
 }
 
+func DeleteUserThayStatus(email string) {
+	o := orm.NewOrm()
+
+	id, err := o.QueryTable("user").Filter("email", email).Update(orm.Params{
+		"status": 0, // 0 - bi khoa, 1 - hoat dong
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("Successful update!,", id)
+}
+
 // Them User
 func AddUser(u User) {
 	o := orm.NewOrm()
@@ -87,4 +101,42 @@ func FindUserWithIdCongTy(idCongTy int) string {
 	}
 
 	return u.Email
+}
+
+// Admin Member
+func FindCongTyByidUser(idUser int) int {
+	o := orm.NewOrm()
+
+	var u = User{}
+	err := o.QueryTable("user").Filter("idUser", idUser).One(&u)
+
+	if err == orm.ErrMultiRows { // Have multiple records
+		return -1
+	}
+	if err == orm.ErrNoRows { // No result
+		return -1
+	}
+
+	return u.IdCongTy
+}
+
+func FindMemberOfCongTy(idCongTy int) []User {
+	o := orm.NewOrm()
+
+	var u []User
+	_, err := o.QueryTable("user").Filter("idCongTy", idCongTy).All(&u)
+
+	if err == orm.ErrNoRows { // No result
+		return nil
+	}
+
+	// Loai bo nhung user co status = 0 - tuc la da bi xoa
+	var u2 []User
+	for i := 0; i < len(u); i++ {
+		if u[i].Status != 0 {
+			u2 = append(u2, u[i])
+		}
+	}
+
+	return u2
 }

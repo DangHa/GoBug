@@ -32,9 +32,18 @@ type Project struct {
 }
 
 type User_project struct {
-	Id        int `orm:column(id);null`
+	Id        int `orm:"column(id);null"`
 	IdUser    int `orm:"column(idUser)"`
 	IdProject int `orm:"column(idProject)"`
+}
+
+type Bug struct {
+	Id             int    `orm:"column(idBug);null"`
+	TenBug         string `orm:"column(tenBug)"`
+	MieutaBug      string `orm:"column(mieutaBug)"`
+	MieutaSolution string `orm:"column(mieutaSolution)"`
+	IdUser         int    `orm:"column(idUser)"`
+	IdProject      int    `orm:"column(idProject)"`
 }
 
 type Master struct {
@@ -44,5 +53,12 @@ type Master struct {
 }
 
 func init() {
-	orm.RegisterModel(new(User), new(VaiTro), new(CongTy), new(Project), new(User_project), new(Master))
+	orm.RegisterModel(
+		new(User),
+		new(VaiTro),
+		new(CongTy),
+		new(Project),
+		new(User_project),
+		new(Master),
+		new(Bug))
 }

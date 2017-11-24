@@ -65,10 +65,13 @@ func UpdateProject(pj Project) {
 	fmt.Println("Successful update!,", id)
 }
 
-func DeleteProject(idproject int, idadmin int) {
+func DeleteProject(idproject int) {
 	o := orm.NewOrm()
 
-	DeleteUserKhoiProject(idadmin, idproject)
+	u := FindUser(idproject)
+	for i := 0; i < len(u); i++ {
+		DeleteUserKhoiProject(u[i], idproject)
+	}
 
 	_, err := o.QueryTable("project").Filter("idProject", idproject).Delete()
 	if err != nil {

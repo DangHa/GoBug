@@ -25,14 +25,14 @@ func (this *LoginController) Login() {
 	u := User{}
 
 	if err := this.ParseForm(&u); err != nil {
-		this.Redirect("/", 302)
+		this.Redirect("/loginagain/", 302)
 		return
 	}
 
 	isValidUser := models.CheckUser(u.Email, u.Password) //Kiem tra mat khau
 
 	if isValidUser == 0 {
-		this.Redirect("/", 302)
+		this.Redirect("/loginagain/", 302)
 		return
 	}
 

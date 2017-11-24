@@ -27,19 +27,21 @@
     <hr>
 
     <input type="hidden" id="id"/>
-    <input type="hidden" id="name"/>
-    <input type="hidden" id="soproject"/>
+    <input type="hidden" id="email"/>
+    <input type="hidden" id="position"/>
 
     <div style="display: none" align="center">
-      <textarea disabled rows="4" cols="50" id="lietkeProject">
+      <textarea disabled rows="5" cols="50" id="lietkeProject">
       </textarea>
       <hr>
     </div>
 
-    New member email: <input type="text" id="new"/><br>
-    Position: <select id="pos">
-      <option value=”Developer″>Developer</option>
-      <option value=”Tester″>Tester</option>
+
+    <input type="hidden" id="posit" value ="Developer"/>
+    New member email: <input type="text" id="new" /><br>
+    Position: <select id="pos" onchange="Positi(this)">
+      <option value= 'Developer'>Developer</option>
+      <option value= 'Tester'>Tester</option>
     </select><br>
     <input type="submit" value="Add" onclick="PostMember()"/>
   </body>

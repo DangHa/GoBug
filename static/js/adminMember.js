@@ -26,7 +26,7 @@ function CreateProjectTableFromJSON(data) {
           tabCell.innerHTML = data[i][colJSON[j]];
       }
       var tabCell1 = tr.insertCell(-1);
-      tabCell1.innerHTML = '<input type="submit" value="Delete" onclick="DeleteProject()"/>'
+      tabCell1.innerHTML = '<input type="submit" value="Delete" onclick="DeleteMember()"/>'
   }
 
   // hide column 1
@@ -34,64 +34,53 @@ function CreateProjectTableFromJSON(data) {
         table.rows[i].cells[0].style.display = "none";
   }
 
-
   // Set onclick cho tung dong
   for (var i = 1; i < table.rows.length; i++) {
-    table.rows[i].onclick = function(){
+    table.rows[i].onmouseover = function(){
 
       document.getElementById("id").value = this.cells[0].innerHTML;
-      document.getElementById("project").value = this.cells[1].innerHTML;
+      document.getElementById("email").value = this.cells[1].innerHTML;
+      document.getElementById('position').value = this.cells[2].innerHTML;
 
-      for (var j = 1; j < table.rows.length; j++){
-        if (j === this.rowIndex) {
-          this.style.color = "blue"
-        }else{
-          table.rows[j].style.color = "black"
-        }
-      }
+      this.style.color = "blue";
+    };
+    table.rows[i].onmouseout = function(){
+      document.getElementById("id").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById('position').value = "";
 
+      this.style.color = "black";
     };
 
   }
+}
 
+function Positi(obj) {
+  document.getElementById('posit').value = obj.value
 }
 
 function PostMember() {
-  var project = document.getElementById('new').value
-  var mieuta = document.getElementById('proj').value
+  var email = document.getElementById('new').value
+  var vaitro = document.getElementById('posit').value
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/adminmemberjson/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Project": project, "Mieuta": mieuta});
+  var data = JSON.stringify({"Email": email, "Vaitro": vaitro});
 
-  xhr.send(data);
-  location.reload();
-}
-
-function PutMember() {
-  var id = document.getElementById('id').value
-  var project = document.getElementById('new').value
-  var mieuta = document.getElementById('desc').value
-
-  var xhr = new XMLHttpRequest();
-  var url = "http://localhost:8080/adminmemberjson/";
-  xhr.open("PUT", url, true);
-  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Id": id, "Project": project, "Mieuta": mieuta});
   xhr.send(data);
   location.reload();
 }
 
 function DeleteMember() {
-  var id = document.getElementById('id').value
+  var email = document.getElementById('email').value
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/adminmemberjson/";
   xhr.open("DELETE", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Id": id});
+  var data = JSON.stringify({"Email": email});
 
   xhr.send(data);
   location.reload();

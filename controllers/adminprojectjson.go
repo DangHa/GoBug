@@ -72,6 +72,6 @@ func (this *AdminProjectJsonController) Delete() {
 	}
 
 	idpro, _ := strconv.Atoi(project.Id)
-	models.DeleteProject(idpro, 25)
+	models.DeleteProject(idpro)
 
 }

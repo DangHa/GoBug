@@ -108,8 +108,9 @@ $( document ).ready(function() {
   var url = 'http://localhost:8080/adminprojectjson/'
   $.getJSON(url, function(data){
     console.log("It Worked!");
-    CreateProjectTableFromJSON(data)
     console.log(data);
+    CreateProjectTableFromJSON(data)
+
   })
 
 });

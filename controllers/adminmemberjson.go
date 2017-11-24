@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/astaxie/beego"
 )
@@ -14,7 +15,7 @@ type AdminMemberJsonControllers struct {
 }
 
 type MemberInformation struct {
-	Id     int
+	Id     string
 	Email  string
 	Vaitro string
 	Number int
@@ -31,7 +32,7 @@ func (this *AdminMemberJsonControllers) Get() {
 	for i := 0; i < len(u); i++ {
 		if u[i].Id != idAdmin {
 			member := MemberInformation{
-				Id:     u[i].Id,
+				Id:     strconv.Itoa(u[i].Id),
 				Email:  u[i].Email,
 				Vaitro: models.FindVaitro(u[i].Idvaitro),
 				Number: len(models.FindProject(u[i].Id))}

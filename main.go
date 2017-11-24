@@ -27,8 +27,11 @@ func main() {
 
 	// Danh cho user (login thi co admin chung)
 	beego.Router("/", &controllers.MainController{})
-	beego.Router("/login/", &controllers.LoginController{}, "get:Get;post:Login")
+	beego.Router("/loginagain/", &controllers.LoginAgainController{}, "get:Get")
 	beego.Router("/signup/", &controllers.CongTyController{}, "get:Get;post:Add")
+	beego.Router("/login/", &controllers.LoginController{}, "get:Get;post:Login")
+	beego.Router("/userprojectjson/", &controllers.UserProjectJson{}, "get:Get;post:Post")
+	beego.Router("/userbugjson/", &controllers.UserBugJson{}, "get:Get;post:Post;put:Update;delete:Delete")
 
 	// Danh cho Admin
 	beego.Router("/loginAdmin/", &controllers.LoginAdminController{})

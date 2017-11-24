@@ -1,9 +1,50 @@
 <html>
   <head>
     <title>Go Bug</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/js/userProject.js"></script>
   <head>
 
   <body>
-    <p>Login</p>
+
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">GoBug</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">ProJect</a></li>
+          <li><a href="">Statistics</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <table class="table table-hover" id="projectUserTable"></table><br>
+    <hr>
+    <table class="table table-hover" id="bugUserTable" style="display: none"></table><br>
+    <input type="hidden" id="idbug"/>
+    <input type="hidden" id="tenbug"/>
+    <input type="hidden" id="mtbug"/>
+    <input type="hidden" id="mtsolution"/>
+
+    <hr>
+    <input type="hidden" id="id"/>
+
+    <input type="hidden" id="id-add"/>
+
+    <div id="newBug" style = "display: none">
+      New bug name: <input type="text" id="new"/><br>
+      New description: <input type="text" id="desc"/><br>
+      New solution: <input type="text" id="solution"/><br>
+
+      <input type="submit" value="Add" onclick="PostBug()"/>
+    <div>
+
+
+
+
+    <input type="hidden" id="idbug"/>
   </body>
 <html>

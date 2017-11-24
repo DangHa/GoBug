@@ -21,8 +21,6 @@ type MemberInformation struct {
 	Number int
 }
 
-var idAdmin = 25 //Id Cua chu cong ty phai sua lai thanh sessionID
-
 func (this *AdminMemberJsonControllers) Get() {
 
 	idCongTy := models.FindCongTyByidUser(idAdmin)

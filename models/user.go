@@ -140,3 +140,29 @@ func FindMemberOfCongTy(idCongTy int) []User {
 
 	return u2
 }
+
+func FindIdUserWithEmail(email string) int {
+	o := orm.NewOrm()
+
+	var u = User{}
+	err := o.QueryTable("user").Filter("email", email).One(&u)
+
+	if err == orm.ErrNoRows { // No result
+		return -1
+	}
+
+	return u.Id
+}
+
+func FindUserWithIdUser(iduser int) User {
+	o := orm.NewOrm()
+
+	var u = User{}
+	err := o.QueryTable("user").Filter("idUser", iduser).One(&u)
+
+	if err == orm.ErrNoRows { // No result
+		return u
+	}
+
+	return u
+}

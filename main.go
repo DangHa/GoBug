@@ -25,19 +25,25 @@ func main() {
 	beego.GlobalSessions, _ = session.NewManager("memory", sessionconf)
 	go beego.GlobalSessions.GC()
 
-	// Danh cho user (login thi co admin chung)
+	// Log in and sign up danh cho user va admin
 	beego.Router("/", &controllers.MainController{})
-	beego.Router("/loginagain/", &controllers.LoginAgainController{}, "get:Get")
 	beego.Router("/signup/", &controllers.CongTyController{}, "get:Get;post:Add")
+	beego.Router("/signupagain/", &controllers.CongTyAgainController{}, "get:Get")
 	beego.Router("/login/", &controllers.LoginController{}, "get:Get;post:Login")
+	beego.Router("/loginagain/", &controllers.LoginAgainController{}, "get:Get")
+
+	//Danh cho User
 	beego.Router("/userprojectjson/", &controllers.UserProjectJson{}, "get:Get;post:Post")
 	beego.Router("/userbugjson/", &controllers.UserBugJson{}, "get:Get;post:Post;put:Update;delete:Delete")
 
 	// Danh cho Admin
 	beego.Router("/loginAdmin/", &controllers.LoginAdminController{})
 	beego.Router("/adminprojectjson/", &controllers.AdminProjectJsonController{}, "get:Get;post:Post;put:Update;delete:Delete")
-	beego.Router("/adminmember/", &controllers.AdminMemberController{})
+	beego.Router("/adminmemberprojectjson/", &controllers.AdminMemberProjectJsonController{}, "get:Get;post:Post;put:Update;delete:Delete")
+	beego.Router("/adminmember/", &controllers.AdminMemberController{}, "get:Get;post:Post")
 	beego.Router("/adminmemberjson/", &controllers.AdminMemberJsonControllers{}, "get:Get;post:Post;delete:Delete")
+	beego.Router("/adminstat/", &controllers.AdminStatControllers{})
+	beego.Router("/adminstatjson/", &controllers.AdminStatJsonControllers{})
 
 	// Danh cho master
 	beego.Router("/masterlogin/", &controllers.MasterLoginController{}, "get:Get;post:Login")

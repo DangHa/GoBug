@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/js/statTable.js"></script>
   <head>
 
   <body>
@@ -11,24 +12,21 @@
     <nav class="navbar navbar-inverse" >
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Go Bug</a>
+          <a class="navbar-brand" href="#">GoBug</a>
         </div>
         <ul class="nav navbar-nav">
-          <li><a href="http://localhost:8080/">Log In</a></li>
-          <li class="active"><a href="#">Sign Up</a></li>
+          <li><a href="http://localhost:8080/loginAdmin/">ProJect</a></li>
+          <li><a href="http://localhost:8080/adminmember/">Member</a></li>
+          <li class="active"><a href="#">Statistics</a></li>
         </ul>
       </div>
     </nav>
-    <br>
 
-    <form action="http://localhost:8080/signup/" method="POST">
-      Email: <input type="text" value="" size="30" name="Email" /><br><br>
-      Domain: <input type="text" value="" size="30" name="Domain" /><br><hr>
-      <input type="submit" value="Sign up" />
-    </form>
+    <table class="table table-hover" id="statTable"></table><br>
 
-    <br>
-    <p style="color: gray" align="middle"> Don't exist this email! </p>
+    <hr>
+    <input type=text id="search"/>
+    <input type="submit" value="Search" onclick="Search()"/>
+
   </body>
-
 <html>

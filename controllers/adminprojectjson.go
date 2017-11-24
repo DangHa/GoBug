@@ -22,7 +22,7 @@ type ProjectJSON struct {
 
 func (this *AdminProjectJsonController) Get() {
 
-	jso := models.FindProjectWithidAdmin(25) // Luu de xac dinh duoc admin nao dang nhap vao he thong
+	jso := models.FindProjectWithidAdmin(idAdmin) // Luu de xac dinh duoc admin nao dang nhap vao he thong
 
 	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200
 	if err != nil {
@@ -46,7 +46,7 @@ func (this *AdminProjectJsonController) Post() {
 
 	newProject := models.Project{TenProject: project.Project, MieutaProject: project.Mieuta}
 
-	models.AddProject(newProject, 25) // Can co IDAdmin o sessionID
+	models.AddProject(newProject, idAdmin) // Can co IDAdmin o sessionID
 }
 
 func (this *AdminProjectJsonController) Update() {

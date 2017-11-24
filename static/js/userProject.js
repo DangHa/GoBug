@@ -26,11 +26,17 @@ function CreateUserProjectTableFromJSON(data) {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i][colJSON[j]];
       }
-      var tabCell = tr.insertCell(-1);
-      tabCell.innerHTML = '<input type="submit" value="Add bug" onclick="CreateBug()"/>';
-
+      if (true) { // Kiem tra xem sessionID cua user hay cua admin
+        var tabCell = tr.insertCell(-1);
+        tabCell.innerHTML = '<input type="submit" value="Add bug" onclick="CreateBug()"/>';
+      }
       var tabCell1 = tr.insertCell(-1);
       tabCell1.innerHTML = '<input type="submit" value="Show all bugs" onclick="CreateBugTable()"/>';
+  }
+
+  // hide column 1
+  for (var i=0; i<table.rows.length; i++){
+        table.rows[i].cells[0].style.display = "none";
   }
 
   // Set onclick cho tung dong

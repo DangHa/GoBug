@@ -2,7 +2,7 @@ function CreateProjectTableFromJSON(data) {
 
   // Header
   var col = ["#", "Project", "Description"];
-  var colJSON = ["Id", "TenProject", "MieutaProject"]; // de dong bo voi du lieu JSON
+  var colJSON = ["Id", "ProjectName", "ProjectDescription"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("projectTable");
@@ -194,7 +194,7 @@ function PostProject() {
   var url = "http://localhost:8080/adminprojectjson/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Project": project, "Mieuta": mieuta});
+  var data = JSON.stringify({"Project": project, "Description": mieuta});
 
   xhr.send(data);
   location.reload();
@@ -209,7 +209,7 @@ function PutProject() {
   var url = "http://localhost:8080/adminprojectjson/";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Id": id, "Project": project, "Mieuta": mieuta});
+  var data = JSON.stringify({"Id": id, "Project": project, "Description": mieuta});
   xhr.send(data);
   location.reload();
 }

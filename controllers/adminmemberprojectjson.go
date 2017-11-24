@@ -39,11 +39,11 @@ func (this *AdminMemberProjectJsonController) Post() {
 
 	for i := 0; i < len(idusers); i++ {
 		user := models.FindUserWithIdUser(idusers[i])
-		if user.Idvaitro != 0 {
+		if user.IdPosition != 0 {
 			member := MemberProject{
 				Id:       user.Id,
 				Member:   user.Email,
-				Position: models.FindVaitro(user.Idvaitro)}
+				Position: models.FindPosition(user.IdPosition)}
 
 			membersProject = append(membersProject, member)
 		}
@@ -65,12 +65,12 @@ func (this *AdminMemberProjectJsonController) Update() {
 }
 
 func (this *AdminMemberProjectJsonController) Delete() {
-	userandproject := models.User_project{}
+	userandproject := models.UserProject{}
 
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &userandproject)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	models.DeleteUserKhoiProject(userandproject.IdUser, userandproject.IdProject)
+	models.DeleteUserInProject(userandproject.IdUser, userandproject.IdProject)
 }

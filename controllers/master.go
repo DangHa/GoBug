@@ -32,7 +32,7 @@ func (this *MasterController) Update() {
 	models.UpdateUser(ctForm.Email)
 
 	//Update status cong ty thanh 1 -- Bat dau hoat dong
-	models.UpdateCongTy(ctForm.Domain, 1)
+	models.UpdateCompany(ctForm.Domain, 1)
 
 	//Gui email cho Admin ket qua tra ve
 	from := "tj.hadv@hblab.vn"
@@ -55,7 +55,7 @@ func (this *MasterController) Delete() {
 	}
 
 	models.DeleteUser(ctForm.Email)
-	models.DeleteCongTy(ctForm.Domain)
+	models.DeleteCompany(ctForm.Domain)
 
 	// Gui email cho Admin ket qua tra ve
 	from := "tj.hadv@hblab.vn"

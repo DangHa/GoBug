@@ -5,45 +5,45 @@ import (
 	_ "github.com/go-sql-driver/mysql" // import mysql driver.
 )
 
-type CongTy struct {
-	Id            int    `orm:"column(idCongTy);null"`
-	TenmienCongTy string `orm:"column(tenmienCongTy)"`
+type Company struct {
+	Id            int    `orm:"column(idCompany);null"`
+	CompanyDomain string `orm:"column(companyDomain)"`
 	Status        int    `orm:"column(status)"`
 }
 
 type User struct {
-	Id       int    `orm:"column(idUser);null"`
-	Email    string `orm:"column(email)"`
-	Password string `orm:"column(password)"`
-	IdCongTy int    `orm:"column(idCongTy)"`
-	Idvaitro int    `orm:"column(idvaitro)"`
-	Status   int    `orm:"column(status)"`
+	Id         int    `orm:"column(idUser);null"`
+	Email      string `orm:"column(email)"`
+	Password   string `orm:"column(password)"`
+	IdCompany  int    `orm:"column(idCompany)"`
+	IdPosition int    `orm:"column(idPosition)"`
+	Status     int    `orm:"column(status)"`
 }
 
-type VaiTro struct {
-	Id        int    `orm:"column(idvaitro);null"`
-	Tenvaitro string `orm:"column(tenvaitro)"`
+type Position struct {
+	Id           int    `orm:"column(idPosition);null"`
+	PositionName string `orm:"column(positionName)"`
 }
 
 type Project struct {
-	Id            int    `orm:"column(idProject);null"`
-	TenProject    string `orm:"column(tenProject)"`
-	MieutaProject string `orm:"column(mieutaProject)"`
+	Id                 int    `orm:"column(idProject);null"`
+	ProjectName        string `orm:"column(projectName)"`
+	ProjectDescription string `orm:"column(projectDescription)"`
 }
 
-type User_project struct {
+type UserProject struct {
 	Id        int `orm:"column(id);null"`
 	IdUser    int `orm:"column(idUser)"`
 	IdProject int `orm:"column(idProject)"`
 }
 
 type Bug struct {
-	Id             int    `orm:"column(idBug);null"`
-	TenBug         string `orm:"column(tenBug)"`
-	MieutaBug      string `orm:"column(mieutaBug)"`
-	MieutaSolution string `orm:"column(mieutaSolution)"`
-	IdUser         int    `orm:"column(idUser)"`
-	IdProject      int    `orm:"column(idProject)"`
+	Id                  int    `orm:"column(idBug);null"`
+	BugName             string `orm:"column(bugName)"`
+	BugDescription      string `orm:"column(bugDescription)"`
+	SolutionDescription string `orm:"column(solutionDescription)"`
+	IdUser              int    `orm:"column(idUser)"`
+	IdProject           int    `orm:"column(idProject)"`
 }
 
 type Master struct {
@@ -55,10 +55,10 @@ type Master struct {
 func init() {
 	orm.RegisterModel(
 		new(User),
-		new(VaiTro),
-		new(CongTy),
+		new(Position),
+		new(Company),
 		new(Project),
-		new(User_project),
+		new(UserProject),
 		new(Master),
 		new(Bug))
 }

@@ -35,7 +35,7 @@ func (this *AdminMemberController) Post() {
 		return
 	}
 
-	up := models.User_project{
+	up := models.UserProject{
 		IdUser:    iduser,
 		IdProject: userandproject.Idproject}
 

@@ -10,7 +10,7 @@ func CheckMaster(email, password string) bool { // Tra ve  0 - Sai user; 1 - Adm
 
 	var user = Master{}
 
-	err := o.QueryTable("master").Filter("Email", email).Filter("Password", password).One(&user)
+	err := o.QueryTable("master").Filter("email", email).Filter("password", password).One(&user)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return false

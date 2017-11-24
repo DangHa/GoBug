@@ -14,7 +14,7 @@ type MasterJsonController struct {
 
 func (this *MasterJsonController) Get() {
 
-	jso := models.FindCongTyTheoStatus(0)
+	jso := models.FindCompanyTheoStatus(0)
 
 	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200
 	if err != nil {

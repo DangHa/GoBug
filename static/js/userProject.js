@@ -3,7 +3,7 @@ function CreateUserProjectTableFromJSON(data) {
 
   // Header
   var col = ["#","Project", "Description", "Number of Bug"];
-  var colJSON = ["Id", "Project", "Mieuta", "Number"]; // de dong bo voi du lieu JSON
+  var colJSON = ["Id", "Project", "Description", "Number"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("projectUserTable");
@@ -62,7 +62,7 @@ function CreateBugProjectTableFromJSON(data) {
 
   // Header
   var col = ["#","Bug", "Description", "Solution"];
-  var colJSON = ["Id", "TenBug", "MieutaBug", "MieutaSolution"]; // de dong bo voi du lieu JSON
+  var colJSON = ["Id", "BugName", "BugDescription", "SolutionDescription"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("bugUserTable");
@@ -167,7 +167,7 @@ function PostBug() {
   var url = "http://localhost:8080/userprojectjson/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"TenBug": name, "MieutaBug": des, "MieutaSolution": solu, "IdProject": idproject});
+  var data = JSON.stringify({"BugName": name, "BugDescription": des, "SolutionDescription": solu, "IdProject": idproject});
   xhr.send(data);
   location.reload();
 }
@@ -183,7 +183,7 @@ function UpdateBug() {
   var url = "http://localhost:8080/userbugjson/";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Id": idbug, "TenBug": name, "MieutaBug": des, "MieutaSolution": solu});
+  var data = JSON.stringify({"Id": idbug, "BugName": name, "BugDescription": des, "SolutionDescription": solu});
   xhr.send(data);
   location.reload();
 }

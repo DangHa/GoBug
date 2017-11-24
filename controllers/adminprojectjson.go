@@ -15,9 +15,9 @@ type AdminProjectJsonController struct {
 }
 
 type ProjectJSON struct {
-	Id      string
-	Project string
-	Mieuta  string
+	Id          string
+	Project     string
+	Description string
 }
 
 func (this *AdminProjectJsonController) Get() {
@@ -44,7 +44,7 @@ func (this *AdminProjectJsonController) Post() {
 		fmt.Println(err)
 	}
 
-	newProject := models.Project{TenProject: project.Project, MieutaProject: project.Mieuta}
+	newProject := models.Project{ProjectName: project.Project, ProjectDescription: project.Description}
 
 	models.AddProject(newProject, idAdmin) // Can co IDAdmin o sessionID
 }
@@ -58,7 +58,7 @@ func (this *AdminProjectJsonController) Update() {
 	}
 
 	idint, _ := strconv.Atoi(project.Id)
-	pj := models.Project{Id: idint, TenProject: project.Project, MieutaProject: project.Mieuta}
+	pj := models.Project{Id: idint, ProjectName: project.Project, ProjectDescription: project.Description}
 
 	models.UpdateProject(pj)
 }

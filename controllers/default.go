@@ -20,6 +20,7 @@ func (this *MainController) Get() {
 
 var idAdmin = 25 //Id Cua chu cong ty phai sua lai thanh sessionID
 var keySengrid = "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"
+var idUser = 29 // Xac nhan seesionid de xac nhan user
 
 func SendMail(from1, to1, subject1, htmlContent1 string) bool {
 	from := mail.NewEmail("BugManage", from1)

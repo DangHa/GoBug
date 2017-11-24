@@ -38,13 +38,13 @@ func (this *AdminStatJsonControllers) Get() { // lay idAdmin de tim
 		solu := 0
 		bugs := models.FindBugWithIdProject(projects[i].Id)
 		for j := 0; j < len(bugs); j++ {
-			if bugs[j].MieutaSolution != "" {
+			if bugs[j].SolutionDescription != "" {
 				solu++
 			}
 		}
 
 		stat := statAdmin{
-			Project:  projects[i].TenProject,
+			Project:  projects[i].ProjectName,
 			Member:   len(models.FindUser(projects[i].Id)),
 			Bug:      len(bugs),
 			Solution: solu}

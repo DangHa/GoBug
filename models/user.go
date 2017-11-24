@@ -11,7 +11,7 @@ func CheckUser(email, password string) int { // Tra ve  0 - Sai user; 1 - Admin 
 	o := orm.NewOrm()
 
 	var user = User{}
-	err := o.QueryTable("user").Filter("Email", email).Filter("Password", password).One(&user)
+	err := o.QueryTable("user").Filter("email", email).Filter("password", password).One(&user)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return 0
@@ -24,7 +24,7 @@ func CheckUser(email, password string) int { // Tra ve  0 - Sai user; 1 - Admin 
 		return 0
 	}
 
-	if user.Idvaitro == 0 { // Admin
+	if user.IdPosition == 0 { // Admin
 		return 1
 	}
 	return 2 //Nhan Vien
@@ -87,11 +87,11 @@ func DeleteUser(email string) {
 	fmt.Println("Done!")
 }
 
-func FindUserWithIdCongTy(idCongTy int) string {
+func FindUserWithIdCongTy(idCompany int) string {
 	o := orm.NewOrm()
 
 	var u = User{}
-	err := o.QueryTable("user").Filter("idCongTy", idCongTy).One(&u)
+	err := o.QueryTable("user").Filter("idCompany", idCompany).One(&u)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return ""
@@ -104,7 +104,7 @@ func FindUserWithIdCongTy(idCongTy int) string {
 }
 
 // Admin Member
-func FindCongTyByidUser(idUser int) int {
+func FindCongTyByIdUser(idUser int) int {
 	o := orm.NewOrm()
 
 	var u = User{}
@@ -117,14 +117,14 @@ func FindCongTyByidUser(idUser int) int {
 		return -1
 	}
 
-	return u.IdCongTy
+	return u.IdCompany
 }
 
-func FindMemberOfCongTy(idCongTy int) []User {
+func FindMemberOfCongTy(idCompany int) []User {
 	o := orm.NewOrm()
 
 	var u []User
-	_, err := o.QueryTable("user").Filter("idCongTy", idCongTy).All(&u)
+	_, err := o.QueryTable("user").Filter("idCompany", idCompany).All(&u)
 
 	if err == orm.ErrNoRows { // No result
 		return nil

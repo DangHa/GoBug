@@ -61,5 +61,5 @@ func (this *UserBugJson) Delete() {
 		fmt.Println(err)
 	}
 
-	models.DeleteBug(bugJson.Id)
+	models.DeleteBugWithIdBug(bugJson.Id)
 }

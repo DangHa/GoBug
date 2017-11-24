@@ -54,12 +54,12 @@ func (this *CongTyController) Add() {
 
 	SendMail(from, to, subject, htmlContent)
 
-	var ct = models.CongTy{TenmienCongTy: ctForm.Domain, Status: 0} // Add 1 cong ty o trang thai  0-Cho chap nhan cua master
-	models.AddCongTy(ct)
+	var ct = models.Company{CompanyDomain: ctForm.Domain, Status: 0} // Add 1 cong ty o trang thai  0-Cho chap nhan cua master
+	models.AddCompany(ct)
 
 	//Tao them 1 User la admin cua cong ty
-	idCongty := models.FindCongTy(ctForm.Domain)                                                         // Tim idCongty vua roi
-	admin := models.User{Email: ctForm.Email, Password: "1", IdCongTy: idCongty, Idvaitro: 0, Status: 0} // Password: 1 , vaitro: 0-admin
+	idCongty := models.FindCompanyWithDomain(ctForm.Domain)                                                 // Tim idCongty vua roi
+	admin := models.User{Email: ctForm.Email, Password: "1", IdCompany: idCongty, IdPosition: 0, Status: 0} // Password: 1 , vaitro: 0-admin
 	models.AddUser(admin)
 
 	this.Redirect("/signup/", 302)

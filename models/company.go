@@ -7,11 +7,11 @@ import (
 )
 
 // Kiem tra co ton tai cong ty khong
-func CheckCongTy(domain string) bool {
+func CheckCompanyWithDomain(domain string) bool {
 	o := orm.NewOrm()
 
-	var ct = CongTy{}
-	err := o.QueryTable("congty").Filter("tenmienCongTy", domain).One(&ct)
+	var ct = Company{}
+	err := o.QueryTable("company").Filter("companyDomain", domain).One(&ct)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return false
@@ -24,11 +24,11 @@ func CheckCongTy(domain string) bool {
 }
 
 // Tim cong ty -1 la ko thay
-func FindCongTy(domain string) int {
+func FindCompanyWithDomain(domain string) int {
 	o := orm.NewOrm()
 
-	var ct = CongTy{}
-	err := o.QueryTable("cong_ty").Filter("tenmienCongTy", domain).One(&ct)
+	var ct = Company{}
+	err := o.QueryTable("company").Filter("companyDomain", domain).One(&ct)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return -1
@@ -41,10 +41,10 @@ func FindCongTy(domain string) int {
 }
 
 // Them Cong ty
-func AddCongTy(ct CongTy) { //Tra ve
+func AddCompany(ct Company) { //Tra ve
 	o := orm.NewOrm()
 
-	qs := o.QueryTable("cong_ty")
+	qs := o.QueryTable("company")
 	i, _ := qs.PrepareInsert()
 	id, err := i.Insert(&ct)
 	if err != nil {
@@ -58,10 +58,10 @@ func AddCongTy(ct CongTy) { //Tra ve
 }
 
 // Update
-func UpdateCongTy(tenmienCongTy string, status int) {
+func UpdateCompany(domain string, status int) {
 	o := orm.NewOrm()
 
-	id, err := o.QueryTable("cong_ty").Filter("tenmienCongTy", tenmienCongTy).Update(orm.Params{
+	id, err := o.QueryTable("company").Filter("companyDomain", domain).Update(orm.Params{
 		"status": status, //Trang thai master gui 1 - chap nhan; 2 - tu choi
 	})
 	if err != nil {
@@ -72,10 +72,10 @@ func UpdateCongTy(tenmienCongTy string, status int) {
 	fmt.Println("Successful update!,", id)
 }
 
-func DeleteCongTy(tenmienCongTy string) {
+func DeleteCompany(domain string) {
 	o := orm.NewOrm()
 
-	_, err := o.QueryTable("cong_ty").Filter("tenmienCongTy", tenmienCongTy).Delete()
+	_, err := o.QueryTable("company").Filter("companyDomain", domain).Delete()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -89,11 +89,11 @@ type Domain_Email struct {
 }
 
 // Dung cho Master
-func FindCongTyTheoStatus(s int) []Domain_Email { // 0 - la chua hoat dong, 1 - la da hoat dong
+func FindCompanyTheoStatus(s int) []Domain_Email { // 0 - la chua hoat dong, 1 - la da hoat dong
 	o := orm.NewOrm()
 
-	var ct []*CongTy
-	num, err := o.QueryTable("cong_ty").Filter("status", s).All(&ct)
+	var ct []*Company
+	num, err := o.QueryTable("company").Filter("status", s).All(&ct)
 	if err == orm.ErrNoRows { // No result
 		return nil
 	}
@@ -101,7 +101,7 @@ func FindCongTyTheoStatus(s int) []Domain_Email { // 0 - la chua hoat dong, 1 - 
 	domains := make([]Domain_Email, 0, num)
 	for i := 0; i < len(ct); i++ {
 		email := FindUserWithIdCongTy((*ct[i]).Id)
-		domain := Domain_Email{Domain: (*ct[i]).TenmienCongTy, Email: email}
+		domain := Domain_Email{Domain: (*ct[i]).CompanyDomain, Email: email}
 		domains = append(domains, domain)
 	}
 

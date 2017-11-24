@@ -6,7 +6,7 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-func AddUser_Project(up User_project) {
+func AddUser_Project(up UserProject) {
 	o := orm.NewOrm()
 
 	qs := o.QueryTable("user_project")
@@ -26,7 +26,7 @@ func AddUser_Project(up User_project) {
 func FindProject(idUser int) []int {
 	o := orm.NewOrm()
 
-	var up []*User_project
+	var up []*UserProject
 	num, err := o.QueryTable("user_project").Filter("idUser", idUser).All(&up)
 
 	if err == orm.ErrNoRows { // No result
@@ -45,7 +45,7 @@ func FindProject(idUser int) []int {
 func FindUser(idProject int) []int {
 	o := orm.NewOrm()
 
-	var up []*User_project
+	var up []*UserProject
 	num, err := o.QueryTable("user_project").Filter("idProject", idProject).All(&up)
 
 	if err == orm.ErrNoRows { // No result
@@ -61,7 +61,7 @@ func FindUser(idProject int) []int {
 	return idusers
 }
 
-func DeleteUserKhoiProject(idUser, idProject int) {
+func DeleteUserInProject(idUser, idProject int) {
 	o := orm.NewOrm()
 
 	_, err := o.QueryTable("user_project").Filter("idUser", idUser).Filter("idProject", idProject).Delete()

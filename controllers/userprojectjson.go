@@ -14,13 +14,11 @@ type UserProjectJson struct {
 	beego.Controller
 }
 
-var idUser = 29 // Xac nhan seesionid de xac nhan user
-
 type userProject struct {
-	Id      string
-	Project string
-	Mieuta  string
-	Number  int
+	Id          string
+	Project     string
+	Description string
+	Number      int
 }
 
 func (this *UserProjectJson) Get() {
@@ -28,11 +26,11 @@ func (this *UserProjectJson) Get() {
 
 	var up []userProject
 	for i := 0; i < len(idProject); i++ {
-		project := models.FindProject_Project(idProject[i])
+		project := models.FindProjectWithIdProject(idProject[i])
 		up = append(up, userProject{Id: strconv.Itoa(idProject[i]),
-			Project: project.TenProject,
-			Mieuta:  project.MieutaProject,
-			Number:  len(models.FindBugWithIdProject(idProject[i]))})
+			Project:     project.ProjectName,
+			Description: project.ProjectDescription,
+			Number:      len(models.FindBugWithIdProject(idProject[i]))})
 	}
 
 	resBody, err := json.MarshalIndent(up, "", "  ") //Get 200

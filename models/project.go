@@ -6,12 +6,12 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-func CheckProject(tenProject string) bool {
+func CheckProject(projectName string) bool {
 	o := orm.NewOrm()
 
 	var pj = Project{}
 
-	err := o.QueryTable("project").Filter("tenProject", tenProject).One(&pj)
+	err := o.QueryTable("project").Filter("projectName", projectName).One(&pj)
 	if err == orm.ErrMultiRows { // Have multiple records
 		return false
 	}
@@ -36,7 +36,7 @@ func AddProject(pj Project, idadmin int) {
 	i.Close()
 
 	// Tim id cua project vua them
-	err = o.QueryTable("project").Filter("tenProject", pj.TenProject).One(&pj)
+	err = o.QueryTable("project").Filter("projectName", pj.ProjectName).One(&pj)
 	if err == orm.ErrMultiRows { // Have multiple records
 		return
 	}
@@ -44,7 +44,7 @@ func AddProject(pj Project, idadmin int) {
 		return
 	}
 
-	up := User_project{IdUser: idadmin, IdProject: pj.Id}
+	up := UserProject{IdUser: idadmin, IdProject: pj.Id}
 	AddUser_Project(up)
 
 	fmt.Println("Successful add!,", id)
@@ -54,8 +54,8 @@ func UpdateProject(pj Project) {
 	o := orm.NewOrm()
 
 	id, err := o.QueryTable("project").Filter("idProject", pj.Id).Update(orm.Params{
-		"tenProject":    pj.TenProject,
-		"mieutaProject": pj.MieutaProject, //Trang thai master gui 1 - chap nhan; 2 - tu choi
+		"projectname":        pj.ProjectName,
+		"projectDescription": pj.ProjectDescription, //Trang thai master gui 1 - chap nhan; 2 - tu choi
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -70,7 +70,7 @@ func DeleteProject(idproject int) {
 
 	u := FindUser(idproject)
 	for i := 0; i < len(u); i++ {
-		DeleteUserKhoiProject(u[i], idproject)
+		DeleteUserInProject(u[i], idproject)
 	}
 
 	_, err := o.QueryTable("project").Filter("idProject", idproject).Delete()
@@ -81,7 +81,7 @@ func DeleteProject(idproject int) {
 	fmt.Println("Done!")
 }
 
-func FindProject_Project(id int) Project {
+func FindProjectWithIdProject(id int) Project {
 	o := orm.NewOrm()
 
 	var pj = Project{}
@@ -104,7 +104,7 @@ func FindProjectWithidAdmin(idAdmin int) []Project {
 
 	var pj []Project
 	for i := 0; i < len(idProject); i++ {
-		pj = append(pj, FindProject_Project(idProject[i]))
+		pj = append(pj, FindProjectWithIdProject(idProject[i]))
 	}
 
 	return pj

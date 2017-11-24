@@ -34,7 +34,7 @@ func AddBug(bug Bug) {
 	fmt.Println("Successful add!,", id)
 }
 
-func DeleteBug(id int) {
+func DeleteBugWithIdBug(id int) {
 	o := orm.NewOrm()
 
 	_, err := o.QueryTable("bug").Filter("idBug", id).Delete()
@@ -49,9 +49,9 @@ func UpdateBug(bug Bug) {
 	o := orm.NewOrm()
 
 	id, err := o.QueryTable("bug").Filter("idBug", bug.Id).Update(orm.Params{
-		"tenBug":         bug.TenBug,
-		"mieutaBug":      bug.MieutaBug,
-		"mieutaSolution": bug.MieutaSolution,
+		"bugName":             bug.BugName,
+		"bugDescription":      bug.BugDescription,
+		"solutionDescription": bug.SolutionDescription,
 	})
 	if err != nil {
 		fmt.Println(err)

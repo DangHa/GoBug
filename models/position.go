@@ -7,8 +7,8 @@ import (
 func CheckAdmin(id int) bool {
 	o := orm.NewOrm()
 
-	var vt = VaiTro{}
-	err := o.QueryTable("vai_tro").Filter("Id", id).One(&vt)
+	var vt = Position{}
+	err := o.QueryTable("position").Filter("Id", id).One(&vt)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return false
@@ -20,11 +20,11 @@ func CheckAdmin(id int) bool {
 	return true
 }
 
-func FindVaitro(id int) string {
+func FindPosition(idPosition int) string {
 	o := orm.NewOrm()
 
-	var vt = VaiTro{}
-	err := o.QueryTable("vai_tro").Filter("Id", id).One(&vt)
+	var vt = Position{}
+	err := o.QueryTable("position").Filter("Id", idPosition).One(&vt)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return ""
@@ -33,14 +33,14 @@ func FindVaitro(id int) string {
 		return ""
 	}
 
-	return vt.Tenvaitro
+	return vt.PositionName
 }
 
-func FindVaitroWithName(tenvaitro string) int {
+func FindPositionWithName(positionName string) int {
 	o := orm.NewOrm()
 
-	var vt = VaiTro{}
-	err := o.QueryTable("vai_tro").Filter("tenvaitro", tenvaitro).One(&vt)
+	var vt = Position{}
+	err := o.QueryTable("position").Filter("positionName", positionName).One(&vt)
 
 	if err == orm.ErrMultiRows { // Have multiple records
 		return 0

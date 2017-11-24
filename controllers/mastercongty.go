@@ -24,7 +24,7 @@ func (this *MasterJsonActiveController) Get() {
 
 func (this *MasterJsonCongTyController) Get() {
 
-	jso := models.FindCongTyTheoStatus(1)
+	jso := models.FindCompanyTheoStatus(1)
 
 	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200
 	if err != nil {

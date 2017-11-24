@@ -15,25 +15,25 @@ type AdminMemberJsonControllers struct {
 }
 
 type MemberInformation struct {
-	Id     string
-	Email  string
-	Vaitro string
-	Number int
+	Id       string
+	Email    string
+	Position string
+	Number   int
 }
 
 func (this *AdminMemberJsonControllers) Get() {
 
-	idCongTy := models.FindCongTyByidUser(idAdmin)
+	idCongTy := models.FindCongTyByIdUser(idAdmin)
 	u := models.FindMemberOfCongTy(idCongTy)
 
 	var members []MemberInformation
 	for i := 0; i < len(u); i++ {
 		if u[i].Id != idAdmin {
 			member := MemberInformation{
-				Id:     strconv.Itoa(u[i].Id),
-				Email:  u[i].Email,
-				Vaitro: models.FindVaitro(u[i].Idvaitro),
-				Number: len(models.FindProject(u[i].Id))}
+				Id:       strconv.Itoa(u[i].Id),
+				Email:    u[i].Email,
+				Position: models.FindPosition(u[i].IdPosition),
+				Number:   len(models.FindProject(u[i].Id))}
 			members = append(members, member)
 		}
 	}
@@ -58,11 +58,11 @@ func (this *AdminMemberJsonControllers) Post() {
 	}
 
 	user := models.User{
-		Email:    member.Email,
-		Password: "1",
-		IdCongTy: models.FindCongTyByidUser(idAdmin),
-		Idvaitro: models.FindVaitroWithName(member.Vaitro),
-		Status:   1}
+		Email:      member.Email,
+		Password:   "1",
+		IdCompany:  models.FindCongTyByIdUser(idAdmin),
+		IdPosition: models.FindPositionWithName(member.Position),
+		Status:     1}
 
 	models.AddUser(user)
 }

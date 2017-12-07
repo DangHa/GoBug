@@ -5,6 +5,18 @@ import (
 	_ "github.com/go-sql-driver/mysql" // import mysql driver.
 )
 
+var (
+	wrongUser = 0
+	admin     = 1
+	members   = 2
+
+	adminPosition    = 0
+	deleteUserStatus = 0
+	activeUserStatus = 1
+	notFound         = -1
+	notFoundPosition = -1
+)
+
 type Company struct {
 	Id            int    `orm:"column(idCompany);null"`
 	CompanyDomain string `orm:"column(companyDomain)"`

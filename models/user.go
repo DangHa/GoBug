@@ -14,20 +14,20 @@ func CheckUser(email, password string) int { // Tra ve  0 - Sai user; 1 - Admin 
 	err := o.QueryTable("user").Filter("email", email).Filter("password", password).One(&user)
 
 	if err == orm.ErrMultiRows { // Have multiple records
-		return 0
+		return wrongUser
 	}
 	if err == orm.ErrNoRows { // No result
-		return 0
+		return wrongUser
 	}
 
-	if user.Status == 0 { //Tai khoan nay da bi xoa hoac chua duoc hoat dong
-		return 0
+	if user.Status == deleteUserStatus { //Tai khoan nay da bi xoa hoac chua duoc hoat dong
+		return wrongUser
 	}
 
-	if user.IdPosition == 0 { // Admin
-		return 1
+	if user.IdPosition == adminPosition { // Admin
+		return admin
 	}
-	return 2 //Nhan Vien
+	return members //Nhan Vien
 }
 
 //Update (dung cho Admin thay doi trang thai khi duoc chap nhan tao cong ty)
@@ -35,7 +35,7 @@ func UpdateUser(email string) {
 	o := orm.NewOrm()
 
 	id, err := o.QueryTable("user").Filter("email", email).Update(orm.Params{
-		"status": 1, // 0 - bi khoa, 1 - hoat dong
+		"status": activeUserStatus, // 0 - bi khoa, 1 - hoat dong
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -45,11 +45,11 @@ func UpdateUser(email string) {
 	fmt.Println("Successful update!,", id)
 }
 
-func DeleteUserThayStatus(email string) {
+func DeleteUserByUpdateStatus(email string) {
 	o := orm.NewOrm()
 
 	id, err := o.QueryTable("user").Filter("email", email).Update(orm.Params{
-		"status": 0, // 0 - bi khoa, 1 - hoat dong
+		"status": deleteUserStatus, // 0 - bi khoa, 1 - hoat dong
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -111,10 +111,10 @@ func FindCongTyByIdUser(idUser int) int {
 	err := o.QueryTable("user").Filter("idUser", idUser).One(&u)
 
 	if err == orm.ErrMultiRows { // Have multiple records
-		return -1
+		return notFound
 	}
 	if err == orm.ErrNoRows { // No result
-		return -1
+		return notFound
 	}
 
 	return u.IdCompany
@@ -133,7 +133,7 @@ func FindMemberOfCongTy(idCompany int) []User {
 	// Loai bo nhung user co status = 0 - tuc la da bi xoa
 	var u2 []User
 	for i := 0; i < len(u); i++ {
-		if u[i].Status != 0 {
+		if u[i].Status != deleteUserStatus {
 			u2 = append(u2, u[i])
 		}
 	}
@@ -148,7 +148,7 @@ func FindIdUserWithEmail(email string) int {
 	err := o.QueryTable("user").Filter("email", email).One(&u)
 
 	if err == orm.ErrNoRows { // No result
-		return -1
+		return notFound
 	}
 
 	return u.Id

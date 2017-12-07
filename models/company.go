@@ -31,10 +31,10 @@ func FindCompanyWithDomain(domain string) int {
 	err := o.QueryTable("company").Filter("companyDomain", domain).One(&ct)
 
 	if err == orm.ErrMultiRows { // Have multiple records
-		return -1
+		return notFound
 	}
 	if err == orm.ErrNoRows { // No result
-		return -1
+		return notFound
 	}
 
 	return ct.Id
@@ -89,7 +89,7 @@ type Domain_Email struct {
 }
 
 // Dung cho Master
-func FindCompanyWithStatus(s int) []Domain_Email { // 0 - la chua hoat dong, 1 - la da hoat dong
+func FindCompanyWithStatus(s int) []Domain_Email {
 	o := orm.NewOrm()
 
 	var ct []*Company

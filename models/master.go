@@ -5,7 +5,7 @@ import (
 )
 
 //Kiem tra mat khau cho login
-func CheckMaster(email, password string) bool { // Tra ve  0 - Sai user; 1 - Admin Dang nhap thanh cong; 2 - nhan vien dang nhap thanh cong
+func CheckMaster(email, password string) bool {
 	o := orm.NewOrm()
 
 	var user = Master{}

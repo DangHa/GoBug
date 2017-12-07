@@ -4,6 +4,7 @@ import (
 	"bugmanage/models"
 	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/astaxie/beego"
 )
@@ -81,4 +82,113 @@ func (this *MasterController) Delete() {
 
 	SendMail(from, to, subject, htmlContent)
 
+}
+
+// Log in master
+type MasterLoginController struct {
+	beego.Controller
+}
+
+func (this *MasterLoginController) Get() {
+	this.TplName = "master/masterlogin.html"
+	this.Render()
+}
+
+type Master struct {
+	Email    string `form:"Email"`
+	Password string `form:"Password"`
+}
+
+// Post
+func (this *MasterLoginController) Login() {
+
+	u := Master{}
+
+	if err := this.ParseForm(&u); err != nil {
+		this.Redirect("/master/login/", redirectStatus)
+		return
+	}
+
+	isValidUser := models.CheckMaster(u.Email, u.Password) //Kiem tra mat khau
+
+	if !isValidUser {
+		this.Redirect("/master/login/", redirectStatus)
+		return
+	}
+
+	// Check if user is logged in
+	session := this.StartSession()
+	userID := session.Get("UserID")
+
+	if userID == nil {
+		session.Set("UserID", idMaster)
+	}
+
+	this.Redirect("/master/", redirectStatus)
+}
+
+// Hien cac cong ty cho duoc thanh lap
+type MasterJsonController struct {
+	beego.Controller
+}
+
+func (this *MasterJsonController) Get() {
+
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", redirectStatus)
+	}
+
+	jso := models.FindCompanyWithStatus(waitStatus)
+
+	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	this.Ctx.Output.Header("Content-Type", "application/json; charset=utf-8")
+	this.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	this.Ctx.Output.Body(resBody)
+	this.ServeJSONP()
+}
+
+// Lay cac cong ty dang hoat dong
+type MasterJsonCongTyController struct {
+	beego.Controller
+}
+
+type MasterJsonActiveController struct {
+	beego.Controller
+}
+
+// Get
+func (this *MasterJsonActiveController) Get() {
+	this.TplName = "master/mastercongty.html"
+	this.Render()
+}
+
+func (this *MasterJsonCongTyController) Get() {
+
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", redirectStatus)
+	}
+
+	jso := models.FindCompanyWithStatus(activeStatus)
+
+	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	this.Ctx.Output.Header("Content-Type", "application/json; charset=utf-8")
+	this.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	this.Ctx.Output.Body(resBody)
+	this.ServeJSONP()
 }

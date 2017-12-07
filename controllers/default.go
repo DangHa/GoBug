@@ -41,7 +41,19 @@ func (this *MainController) Get() {
 
 }
 
-var keySengrid = "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"
+var (
+	keySengrid     = "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"
+	adminPosition  = 0
+	idMaster       = 1
+	redirectStatus = 302
+	activeStatus   = 1
+	waitStatus     = 0
+)
+
+//Chuyen lai theo chuan de cho vao database
+func ConvertDate(date string) string {
+	return date[6:] + "-" + date[:2] + "-" + date[3:5]
+}
 
 func SendMail(from1, to1, subject1, htmlContent1 string) bool {
 	from := mail.NewEmail("BugManage", from1)
@@ -63,9 +75,4 @@ func SendMail(from1, to1, subject1, htmlContent1 string) bool {
 		fmt.Println(response.Headers)
 		return true
 	}
-}
-
-//Chuyen lai theo chuan de cho vao database
-func ConvertDate(date string) string {
-	return date[6:] + "-" + date[:2] + "-" + date[3:5]
 }

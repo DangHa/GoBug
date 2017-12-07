@@ -43,10 +43,10 @@ func FindPositionWithName(positionName string) int {
 	err := o.QueryTable("position").Filter("positionName", positionName).One(&vt)
 
 	if err == orm.ErrMultiRows { // Have multiple records
-		return 0
+		return notFoundPosition
 	}
 	if err == orm.ErrNoRows { // No result
-		return 0
+		return notFoundPosition
 	}
 
 	return vt.Id

@@ -59,3 +59,13 @@ func (this *LoginController) Login() {
 
 	this.Redirect("/login/", 302)
 }
+
+// login again
+type LoginAgainController struct {
+	beego.Controller
+}
+
+func (this *LoginAgainController) Get() {
+	this.TplName = "loginagain.html"
+	this.Render()
+}

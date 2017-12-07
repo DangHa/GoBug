@@ -136,7 +136,7 @@ function CreateAddMemberProjectTableFromJSON(data) {
   var colJSON = ["Id", "Member", "Position"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
-  var table = document.getElementById("membersTable");
+  var table = document.getElementById("addmemberTable");
 
   // lam dau bang
   var tr = table.insertRow(-1);                   // TABLE ROW.
@@ -185,12 +185,13 @@ function CreateAddMemberProjectTableFromJSON(data) {
 
 function AddMember() {
   document.getElementById('id-add').value = document.getElementById('id').value;
+  document.getElementById('addmemberTable').innerHTML = "";
 
   if (document.getElementById('id-add').value === document.getElementById('id').value){
-    if (document.getElementById('ad').style.display === "none"){
-      document.getElementById('ad').style.display = "block";
+    if (document.getElementById('addmemberTable').style.display === "none"){
+      document.getElementById('addmemberTable').style.display = "block";
     }else{
-      document.getElementById('ad').style.display = "none";
+      document.getElementById('addmemberTable').style.display = "none";
       document.getElementById('id-add').value = "";
     }
   }
@@ -200,6 +201,10 @@ function AddMember() {
       url: 'http://localhost:8080/admin/addmember/',
       data:data,
       success: function (response){
+        if (response === null) {
+          document.getElementById('addmemberTable').innerHTML = "All members are working in this project";
+          return;
+        }
         CreateAddMemberProjectTableFromJSON(response);
       }
   });
@@ -224,19 +229,24 @@ function CreateMemberTable() {
       url: 'http://localhost:8080/adminmemberprojectjson/',
       data:data,
       success: function (response){
+        if (response === null) {
+          document.getElementById('membersTable').innerHTML = "No member are working in this project";
+          return;
+        }
         CreateMemberProjectTableFromJSON(response);
       }
   });
 }
 
 function AddMember2(){
-  var iduser = document.getElementById('iduser').value
+  var iduser = parseInt(document.getElementById('iduser').value)
   var idproject = parseInt(document.getElementById('id-add').value)
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/adminmember/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  console.log(iduser, idproject);
   var data = JSON.stringify({"IdUser": iduser, "Idproject": idproject});
 
   xhr.send(data);

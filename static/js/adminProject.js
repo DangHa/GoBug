@@ -25,7 +25,6 @@ function CreateProjectTableFromJSON(data) {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i][colJSON[j]];
           tabCell.contentEditable =true;
-
       }
 
       var tabCell = tr.insertCell(-1);

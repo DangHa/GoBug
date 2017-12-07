@@ -27,7 +27,7 @@ func (this *MasterController) Update() {
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 	}
 
 	// JSON chuyen ve tu master html
@@ -61,7 +61,7 @@ func (this *MasterController) Delete() {
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 	}
 
 	// JSON chuyen ve tu master html

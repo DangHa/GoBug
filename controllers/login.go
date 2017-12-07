@@ -25,14 +25,14 @@ func (this *LoginController) Login() {
 	u := User{}
 
 	if err := this.ParseForm(&u); err != nil {
-		this.Redirect("/login/again/", 302)
+		this.Redirect("/login/again/", redirectStatus)
 		return
 	}
 
 	isValidUser := models.CheckUser(u.Email, u.Password) //Kiem tra mat khau
 
 	if isValidUser == 0 {
-		this.Redirect("/login/again/", 302)
+		this.Redirect("/login/again/", redirectStatus)
 		return
 	}
 
@@ -46,18 +46,18 @@ func (this *LoginController) Login() {
 
 	idUser, ok := userID.(int)
 	if !ok {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 		return
 	}
 
 	checkAdmin := models.FindUserWithIdUser(idUser)
 	//Kiem tra xem co la member hay admin
 	if checkAdmin.IdPosition == 0 {
-		this.Redirect("/loginAdmin/", 302)
+		this.Redirect("/loginAdmin/", redirectStatus)
 		return
 	}
 
-	this.Redirect("/login/", 302)
+	this.Redirect("/login/", redirectStatus)
 }
 
 // login again

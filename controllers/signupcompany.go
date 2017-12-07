@@ -29,8 +29,18 @@ func (this *CongTyController) Add() {
 	ctForm := CongTyForm{}
 
 	if err := this.ParseForm(&ctForm); err != nil {
-		this.Redirect("/signup/", 302)
+		this.Redirect("/signup/", redirectStatus)
 		return
+	}
+
+	for i := 0; i < len(ctForm.Email); i++ {
+		if ctForm.Email[i] == '@' && len(ctForm.Email)-5 > i {
+			break
+		}
+		if i == len(ctForm.Email)-1 {
+			this.Redirect("/signup/again/", redirectStatus)
+			return
+		}
 	}
 
 	//Gui email cho nguoi vua dang ki xac nhan la da dang ki
@@ -39,10 +49,10 @@ func (this *CongTyController) Add() {
 	subject := "Yeu cau them cong ty"
 	htmlContent := "<strong> Đã gửi yêu cầu thêm công ty của bạn!</strong><br>Vui lòng chờ xác nhận cho phép tạo công ty"
 
-	a := SendMail(from, to, subject, htmlContent)
+	checkSend := SendMail(from, to, subject, htmlContent)
 
-	if !a { //Neu ko co email nay thi dung
-		this.Redirect("/signup/again/", 302)
+	if !checkSend { //Neu ko co email nay thi dung
+		this.Redirect("/signup/again/", redirectStatus)
 		return
 	}
 
@@ -64,7 +74,7 @@ func (this *CongTyController) Add() {
 	admin := models.User{Email: ctForm.Email, Password: "1", IdCompany: idCongty, IdPosition: 0, Status: 0} // Password: 1 , vaitro: 0-admin
 	models.AddUser(admin)
 
-	this.Redirect("/signup/", 302)
+	this.Redirect("/signup/", redirectStatus)
 }
 
 // Dang ki lai

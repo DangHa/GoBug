@@ -33,11 +33,11 @@ func (this *MainController) Get() {
 	checkAdmin := models.FindUserWithIdUser(idUser)
 	//Kiem tra xem co la member hay admin
 	if checkAdmin.IdPosition == 0 {
-		this.Redirect("/loginAdmin/", 302)
+		this.Redirect("/loginAdmin/", redirectStatus)
 		return
 	}
 
-	this.Redirect("/login/", 302)
+	this.Redirect("/login/", redirectStatus)
 
 }
 
@@ -48,6 +48,7 @@ var (
 	redirectStatus = 302
 	activeStatus   = 1
 	waitStatus     = 0
+	notFound       = -1
 )
 
 //Chuyen lai theo chuan de cho vao database

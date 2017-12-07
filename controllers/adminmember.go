@@ -101,7 +101,7 @@ func (this *AdminMemberJsonControllers) Get() {
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 	}
 
 	idAdmin := userId.(int)
@@ -139,7 +139,7 @@ func (this *AdminMemberJsonControllers) Post() {
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 	}
 
 	idAdmin := userId.(int)
@@ -151,12 +151,46 @@ func (this *AdminMemberJsonControllers) Post() {
 		fmt.Println(err)
 	}
 
+	//Check email cua member moi
+	for i := 0; i < len(member.Email); i++ {
+		if member.Email[i] == '@' && len(member.Email)-5 > i {
+			break
+		}
+		if i == len(member.Email)-1 {
+			this.Redirect("/loginAdmin/", redirectStatus)
+			return
+		}
+	}
+
+	// Kiem tra user co ton tai ko
+	iduser := models.FindIdUserWithEmail(member.Email)
+	if iduser != notFound {
+		user := models.FindUserWithIdUser(iduser)
+		if user.Status == 0 {
+			models.UpdateUser(user.Email)
+		}
+		return
+	}
+
+	//Gui email cho nguoi vua dang ki xac nhan la da dang ki
+	from := "tj.hadv@hblab.vn"
+	to := member.Email
+	subject := "Yeu cau them cong ty"
+	htmlContent := "<strong> Bạn được thêm vào công ty!</strong><br>Password của bạn là: 1"
+
+	checkSend := SendMail(from, to, subject, htmlContent)
+
+	if !checkSend { //Neu ko co email nay thi dung
+		this.Redirect("/loginAdmin/", redirectStatus)
+		return
+	}
+
 	user := models.User{
 		Email:      member.Email,
 		Password:   "1",
 		IdCompany:  models.FindCongTyByIdUser(idAdmin),
 		IdPosition: models.FindPositionWithName(member.Position),
-		Status:     1}
+		Status:     activeStatus}
 
 	models.AddUser(user)
 }
@@ -168,7 +202,7 @@ func (this *AdminMemberJsonControllers) Delete() {
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 	}
 
 	member := MemberInformation{}

@@ -16,10 +16,6 @@ type UserBugJson struct {
 	beego.Controller
 }
 
-func (this *UserBugJson) Get() {
-
-}
-
 func (this *UserBugJson) Post() {
 
 	bugJson := models.Bug{}
@@ -43,6 +39,16 @@ func (this *UserBugJson) Post() {
 }
 
 func (this *UserBugJson) Update() {
+
+	session := this.StartSession()
+	User := session.Get("UserID")
+
+	if User == nil {
+		return
+	}
+
+	idUser := User.(int)
+
 	bugJson := models.Bug{}
 
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &bugJson)
@@ -50,15 +56,47 @@ func (this *UserBugJson) Update() {
 		fmt.Println(err)
 	}
 
+	// kiem tra xem project nay user co duoc tham gia khong
+	projects := models.FindProject(idUser)
+	for i := 0; i < len(projects); i++ {
+		if projects[i] == bugJson.IdProject {
+			break
+		}
+		if i == len(projects)-1 {
+			return
+		}
+	}
+
 	models.UpdateBug(bugJson)
 }
 
 func (this *UserBugJson) Delete() {
+
+	session := this.StartSession()
+	User := session.Get("UserID")
+
+	if User == nil {
+		return
+	}
+
+	idUser := User.(int)
+
 	bugJson := models.Bug{}
 
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &bugJson)
 	if err != nil {
 		fmt.Println(err)
+	}
+
+	// kiem tra xem project nay user co duoc tham gia khong
+	projects := models.FindProject(idUser)
+	for i := 0; i < len(projects); i++ {
+		if projects[i] == bugJson.IdProject {
+			break
+		}
+		if i == len(projects)-1 {
+			return
+		}
 	}
 
 	models.DeleteBugWithIdBug(bugJson.Id)
@@ -195,6 +233,21 @@ func (this *UserProjectJson) Post() {
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &bugJson)
 	if err != nil {
 		fmt.Println(err)
+	}
+
+	if bugJson.BugName == "" {
+		return
+	}
+
+	// kiem tra xem project nay user co duoc tham gia khong
+	projects := models.FindProject(idUser)
+	for i := 0; i < len(projects); i++ {
+		if projects[i] == bugJson.IdProject {
+			break
+		}
+		if i == len(projects)-1 {
+			return
+		}
 	}
 
 	bugJson.FoundDate = time.Now().String()

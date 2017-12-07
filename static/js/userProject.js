@@ -171,13 +171,17 @@ function PostBug() {
   var idproject = parseInt(document.getElementById('id-add').value)
   var name = document.getElementById('new').value
   var des = document.getElementById('desc').value
-  var solu = document.getElementById('solution').value
 
+  if (name === "") {
+    document.getElementById('notification').value = "Bug name is empty!"
+    return
+  }
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/userprojectjson/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"BugName": name, "BugDescription": des, "SolutionDescription": solu, "IdProject": idproject});
+  var data = JSON.stringify({"BugName": name, "BugDescription": des, "IdProject": idproject});
+  console.log(data);
   xhr.send(data);
   location.reload();
 }

@@ -30,7 +30,7 @@ func (this *AdminProjectJsonController) Get() {
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 		return
 	}
 
@@ -57,7 +57,7 @@ func (this *AdminProjectJsonController) Post() {
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 		return
 	}
 
@@ -87,7 +87,7 @@ func (this *AdminProjectJsonController) Update() {
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 	}
 
 	// JSON chuyen ve tu master html
@@ -115,7 +115,7 @@ func (this *AdminProjectJsonController) Delete() {
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 	}
 
 	// JSON chuyen ve tu master html
@@ -133,11 +133,6 @@ func (this *AdminProjectJsonController) Delete() {
 // Cac member trong tung du an
 type AdminMemberProjectJsonController struct {
 	beego.Controller
-}
-
-//create table
-func (this *AdminMemberProjectJsonController) Get() {
-
 }
 
 type MemberProject struct {

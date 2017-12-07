@@ -60,7 +60,7 @@ func (this *AdminStatJsonControllers) Get() { // lay idAdmin de tim
 	userId := session.Get("UserID")
 
 	if userId == nil {
-		this.Redirect("/", 302)
+		this.Redirect("/", redirectStatus)
 		return
 	}
 

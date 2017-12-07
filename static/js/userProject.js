@@ -173,7 +173,6 @@ function PostBug() {
   var des = document.getElementById('desc').value
 
   if (name === "") {
-    document.getElementById('notification').value = "Bug name is empty!"
     return
   }
   var xhr = new XMLHttpRequest();

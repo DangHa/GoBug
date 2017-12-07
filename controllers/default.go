@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"bugmanage/models"
 	"fmt"
 	"log"
 
@@ -14,13 +15,33 @@ type MainController struct {
 }
 
 func (this *MainController) Get() {
-	this.TplName = "login.html"
-	this.Render()
+
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil { // kiem tra co session id chua
+		this.TplName = "login.html"
+		this.Render()
+		return
+	}
+
+	idUser, ok := userId.(int)
+	if !ok {
+		return
+	}
+
+	checkAdmin := models.FindUserWithIdUser(idUser)
+	//Kiem tra xem co la member hay admin
+	if checkAdmin.IdPosition == 0 {
+		this.Redirect("/loginAdmin/", 302)
+		return
+	}
+
+	this.Redirect("/login/", 302)
+
 }
 
-var idAdmin = 25 //Id Cua chu cong ty phai sua lai thanh sessionID
 var keySengrid = "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"
-var idUser = 29 // Xac nhan seesionid de xac nhan user
 
 func SendMail(from1, to1, subject1, htmlContent1 string) bool {
 	from := mail.NewEmail("BugManage", from1)
@@ -42,4 +63,9 @@ func SendMail(from1, to1, subject1, htmlContent1 string) bool {
 		fmt.Println(response.Headers)
 		return true
 	}
+}
+
+//Chuyen lai theo chuan de cho vao database
+func ConvertDate(date string) string {
+	return date[6:] + "-" + date[:2] + "-" + date[3:5]
 }

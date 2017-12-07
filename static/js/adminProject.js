@@ -1,8 +1,8 @@
 function CreateProjectTableFromJSON(data) {
 
   // Header
-  var col = ["#", "Project", "Description"];
-  var colJSON = ["Id", "ProjectName", "ProjectDescription"]; // de dong bo voi du lieu JSON
+  var col = ["#", "Project", "Description", "Begin Date", "Finish Date"];
+  var colJSON = ["Id", "ProjectName", "ProjectDescription", "BeginDate", "FinishDate"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("projectTable");
@@ -25,19 +25,20 @@ function CreateProjectTableFromJSON(data) {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i][colJSON[j]];
           tabCell.contentEditable =true;
+
       }
 
       var tabCell = tr.insertCell(-1);
-      tabCell.innerHTML = '<input type="submit" value="Update" onclick="PutProject()"/>'
+      tabCell.innerHTML = '<input type="submit" class="btn btn-warning" value="Update" onclick="PutProject()"/>'
 
       var tabCell1 = tr.insertCell(-1);
-      tabCell1.innerHTML = '<input type="submit" value="Delete" onclick="DeleteProject()"/>'
+      tabCell1.innerHTML = '<input type="submit" class="btn btn-danger" value="Delete" onclick="DeleteProject()"/>'
 
       var tabCell2 = tr.insertCell(-1);
-      tabCell2.innerHTML = '<input type="submit" value="Add member" onclick="AddMember()"/>'
+      tabCell2.innerHTML = '<input type="submit" class="btn btn-success" value="Add member" onclick="AddMember()"/>'
 
       var tabCell3 = tr.insertCell(-1);
-      tabCell3.innerHTML = '<input type="submit" value="Show all members" onclick="CreateMemberTable()"/>'
+      tabCell3.innerHTML = '<input type="submit" class="btn btn-info" value="Show all members" onclick="CreateMemberTable()"/>'
   }
 
   // hide column 1
@@ -53,6 +54,8 @@ function CreateProjectTableFromJSON(data) {
       document.getElementById("id").value = this.cells[0].innerHTML;
       document.getElementById("project").value = this.cells[1].innerHTML;
       document.getElementById('mieuta').value = this.cells[2].innerHTML;
+      document.getElementById('begindate').value = this.cells[3].innerHTML;
+      document.getElementById('finishdate').value = this.cells[4].innerHTML;
 
       this.style.color = "blue";
     };
@@ -60,6 +63,9 @@ function CreateProjectTableFromJSON(data) {
       document.getElementById("id").value = "";
       document.getElementById("project").value = "";
       document.getElementById('mieuta').value = "";
+      document.getElementById('begindate').value = "";
+      document.getElementById('finishdate').value = "";
+
       this.style.color = "black";
     };
 
@@ -96,7 +102,62 @@ function CreateMemberProjectTableFromJSON(data) {
           tabCell.innerHTML = data[i][colJSON[j]];
       }
       var tabCell = tr.insertCell(-1);
-      tabCell.innerHTML = '<input type="submit" value="Delete" onclick="DeleteMember()"/>';
+      tabCell.innerHTML = '<input type="submit" class="btn btn-danger" value="Delete" onclick="DeleteMember()"/>';
+  }
+
+  // hide column 1
+  for (var i=0; i<table.rows.length; i++){
+        table.rows[i].cells[0].style.display = "none";
+  }
+
+  // Set onclick cho tung dong
+  for (var i = 1; i < table.rows.length; i++) {
+    table.rows[i].onmouseover = function(){
+
+      document.getElementById("iduser").value = this.cells[0].innerHTML;
+
+      this.style.color = "blue";
+    };
+    table.rows[i].onmouseout = function(){
+
+      document.getElementById("iduser").value = "";
+
+      this.style.color = "black";
+    };
+  }
+
+}
+
+//Tao them bang khi an vao show all bugs
+function CreateAddMemberProjectTableFromJSON(data) {
+
+  // Header
+  var col = ["#","Member", "Position"];
+  var colJSON = ["Id", "Member", "Position"]; // de dong bo voi du lieu JSON
+
+  // Goi den bang can tim
+  var table = document.getElementById("membersTable");
+
+  // lam dau bang
+  var tr = table.insertRow(-1);                   // TABLE ROW.
+
+  for (var i = 0; i < col.length; i++) {
+      var th = document.createElement("th");      // TABLE HEADER.
+      th.innerHTML = col[i];
+      tr.appendChild(th);
+  }
+
+  // add du lieu vao cac dong
+  for (var i = 0; i < data.length; i++) {
+
+      tr = table.insertRow(-1);
+
+      for (var j = 0; j < col.length; j++) {
+          var tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = data[i][colJSON[j]];
+      }
+      var tabCell = tr.insertCell(-1);
+      tabCell.innerHTML = '<input type="submit" class="btn btn-success" value="Add member" id="addmember" onclick="AddMember2()"/>';
   }
 
   // hide column 1
@@ -123,13 +184,25 @@ function CreateMemberProjectTableFromJSON(data) {
 }
 
 function AddMember() {
-  if (document.getElementById('ad').style.display === "none"){
-    document.getElementById('ad').style.display = "block";
-    document.getElementById('id-add').value = document.getElementById('id').value;
-  }else{
-    document.getElementById('ad').style.display = "none";
-    document.getElementById('id-add').value = "";
+  document.getElementById('id-add').value = document.getElementById('id').value;
+
+  if (document.getElementById('id-add').value === document.getElementById('id').value){
+    if (document.getElementById('ad').style.display === "none"){
+      document.getElementById('ad').style.display = "block";
+    }else{
+      document.getElementById('ad').style.display = "none";
+      document.getElementById('id-add').value = "";
+    }
   }
+  var data = JSON.stringify({"IdProject": parseInt(document.getElementById('id').value)});
+  $.ajax({
+      type:"POST",
+      url: 'http://localhost:8080/admin/addmember/',
+      data:data,
+      success: function (response){
+        CreateAddMemberProjectTableFromJSON(response);
+      }
+  });
 }
 
 function CreateMemberTable() {
@@ -157,14 +230,14 @@ function CreateMemberTable() {
 }
 
 function AddMember2(){
-  var email = document.getElementById('memberemail').value
+  var iduser = document.getElementById('iduser').value
   var idproject = parseInt(document.getElementById('id-add').value)
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/adminmember/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Idproject": idproject, "Email": email});
+  var data = JSON.stringify({"IdUser": iduser, "Idproject": idproject});
 
   xhr.send(data);
   location.reload();
@@ -189,13 +262,16 @@ function DeleteMember() {
 function PostProject() {
   var project = document.getElementById('new').value
   var mieuta = document.getElementById('desc').value
+  var begindate = document.getElementById('begin').value
+  var finishdate = document.getElementById('begin').value
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/adminprojectjson/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Project": project, "Description": mieuta});
+  var data = JSON.stringify({"Project": project, "Description": mieuta, "BeginDate": begindate, "FinishDate": finishdate});
 
+  console.log(data);
   xhr.send(data);
   location.reload();
 }
@@ -204,12 +280,14 @@ function PutProject() {
   var id = document.getElementById('id').value
   var project = document.getElementById('project').value
   var mieuta = document.getElementById('mieuta').value
+  var begindate = document.getElementById('begindate').value
+  var finishdate = document.getElementById('finishdate').value
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/adminprojectjson/";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Id": id, "Project": project, "Description": mieuta});
+  var data = JSON.stringify({"Id": id, "Project": project, "Description": mieuta, "BeginDate": begindate, "FinishDate": finishdate});
   xhr.send(data);
   location.reload();
 }
@@ -227,8 +305,11 @@ function DeleteProject() {
   location.reload();
 }
 
-
 $( document ).ready(function() {
+  $('.datepicker').datepicker({
+    format: 'mm/dd/yyyy',
+    startDate: '-3d'
+  });
   //Get JSON
   var url = 'http://localhost:8080/adminprojectjson/'
   $.getJSON(url, function(data){
@@ -237,5 +318,5 @@ $( document ).ready(function() {
     CreateProjectTableFromJSON(data)
 
   })
-
+  console.log("1");
 });

@@ -23,6 +23,16 @@ type MemberInformation struct {
 
 func (this *AdminMemberJsonControllers) Get() {
 
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+	}
+
+	idAdmin := userId.(int)
+
 	idCongTy := models.FindCongTyByIdUser(idAdmin)
 	u := models.FindMemberOfCongTy(idCongTy)
 
@@ -50,6 +60,17 @@ func (this *AdminMemberJsonControllers) Get() {
 }
 
 func (this *AdminMemberJsonControllers) Post() {
+
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+	}
+
+	idAdmin := userId.(int)
+
 	member := MemberInformation{}
 
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &member)
@@ -68,6 +89,15 @@ func (this *AdminMemberJsonControllers) Post() {
 }
 
 func (this *AdminMemberJsonControllers) Delete() {
+
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+	}
+
 	member := MemberInformation{}
 
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &member)

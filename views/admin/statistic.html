@@ -5,6 +5,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../static/js/statTable.js"></script>
+    <script src="../static/js/logout.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <head>
 
   <body>
@@ -18,13 +21,15 @@
           <li><a href="http://localhost:8080/loginAdmin/">ProJect</a></li>
           <li><a href="http://localhost:8080/adminmember/">Member</a></li>
           <li class="active"><a href="#">Statistics</a></li>
+          <li align="right" ><a onclick="LogOut()">Log out</a></li>
         </ul>
       </div>
     </nav>
 
     <table class="table table-hover" id="statTable"></table><br>
-
     <hr>
+    <br>
+    <div id="container" style="min-width: 500px; max-width: 900px; height: 450px; margin: 0 auto"></div>
 
   </body>
 <html>

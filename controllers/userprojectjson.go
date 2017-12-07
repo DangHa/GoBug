@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"time"
 
 	"github.com/astaxie/beego"
 )
@@ -19,9 +20,25 @@ type userProject struct {
 	Project     string
 	Description string
 	Number      int
+	BeginDate   string
+	FinishDate  string
+	IdPosition  int
 }
 
 func (this *UserProjectJson) Get() {
+
+	// Check if user is logged in
+	session := this.StartSession()
+	User := session.Get("UserID")
+
+	if User == nil {
+		return
+	}
+
+	idUser := User.(int)
+
+	user := models.FindUserWithIdUser(idUser)
+
 	idProject := models.FindProject(idUser)
 
 	var up []userProject
@@ -30,7 +47,10 @@ func (this *UserProjectJson) Get() {
 		up = append(up, userProject{Id: strconv.Itoa(idProject[i]),
 			Project:     project.ProjectName,
 			Description: project.ProjectDescription,
-			Number:      len(models.FindBugWithIdProject(idProject[i]))})
+			Number:      len(models.FindBugWithIdProject(idProject[i])),
+			BeginDate:   project.BeginDate,
+			FinishDate:  project.FinishDate,
+			IdPosition:  user.IdPosition})
 	}
 
 	resBody, err := json.MarshalIndent(up, "", "  ") //Get 200
@@ -44,17 +64,29 @@ func (this *UserProjectJson) Get() {
 	this.ServeJSONP()
 }
 
+// Ke de post bug
 func (this *UserProjectJson) Post() {
-	bugJson := models.Bug{}
 
+	// Check if user is logged in
+	session := this.StartSession()
+	User := session.Get("UserID")
+
+	if User == nil {
+		return
+	}
+
+	idUser := User.(int)
+
+	// Lay du lieu tu json
+	bugJson := models.Bug{}
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &bugJson)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	bugJson.IdUser = idUser
+	bugJson.FoundDate = time.Now().String()
 
-	fmt.Println(bugJson)
+	bugJson.IdUser = idUser
 
 	models.AddBug(bugJson)
 }

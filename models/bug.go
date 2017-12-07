@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/astaxie/beego/orm"
 )
@@ -13,6 +14,19 @@ func FindBugWithIdProject(idProject int) []Bug {
 	_, err := o.QueryTable("bug").Filter("idProject", idProject).All(&bugs)
 
 	if err == orm.ErrNoRows { // No result
+		return nil
+	}
+
+	return bugs
+}
+
+func FindBugWithNameBug(bugName string) []Bug {
+	o := orm.NewOrm()
+
+	var bugs []Bug
+	_, err := o.QueryTable("bug").Filter("bugName__icontains", bugName).All(&bugs)
+
+	if err == orm.ErrNoRows {
 		return nil
 	}
 
@@ -52,6 +66,7 @@ func UpdateBug(bug Bug) {
 		"bugName":             bug.BugName,
 		"bugDescription":      bug.BugDescription,
 		"solutionDescription": bug.SolutionDescription,
+		"updateDate":          time.Now(),
 	})
 	if err != nil {
 		fmt.Println(err)

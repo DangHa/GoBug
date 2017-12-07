@@ -21,6 +21,14 @@ func (this *MasterController) Get() {
 // Put
 func (this *MasterController) Update() {
 
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+	}
+
 	// JSON chuyen ve tu master html
 	ctForm := CongTyForm{}
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &ctForm)
@@ -46,6 +54,14 @@ func (this *MasterController) Update() {
 
 //Delete
 func (this *MasterController) Delete() {
+
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+	}
 
 	// JSON chuyen ve tu master html
 	ctForm := CongTyForm{}

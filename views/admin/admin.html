@@ -5,10 +5,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../static/js/adminProject.js"></script>
+    <script src="../static/js/bootstrap-datepicker.js"></script>
+    <script src="../static/js/logout.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/datepicker.css">
   <head>
 
   <body>
-    {{.}}
     <nav class="navbar navbar-inverse" >
       <div class="container-fluid">
         <div class="navbar-header">
@@ -18,6 +20,7 @@
           <li class="active"><a href="#">ProJect</a></li>
           <li><a href="http://localhost:8080/adminmember/">Member</a></li>
           <li><a href="http://localhost:8080/adminstat/">Statistics</a></li>
+          <li align="right" ><a onclick="LogOut()" href="http://localhost:8080/">Log out</a></li>
         </ul>
       </div>
     </nav>
@@ -25,24 +28,28 @@
     <table class="table table-hover" id="projectTable"></table><br>
     <hr>
     <table class="table table-hover" id="membersTable" style="display: none"></table><br>
-    <input type="hidden" id="iduser"/>
+    <input type="hidden" id="iduser"/><br>
 
     <hr>
 
     <input type="hidden" id="id"/>
     <input type="hidden" id="project"/>
     <input type="hidden" id="mieuta"/>
+    <input type="hidden" id="begindate"/>
+    <input type="hidden" id="finishdate"/>
 
     <input type="hidden" id="id-add"/>
-    <div style ="display: none" id="ad">
-      New member email: <input type="text" id="memberemail"/><br>
-      <input type="submit" value="Add member" id="addmember" onclick="AddMember2()"/>
-      <hr>
+    
+    <table class="table table-hover" id="ad" style="display: none"></table><br>
+
+    <div align="center">
+      New project name: <input type="text" id="new"/><br>
+      New description: <input type="text" id="desc"/><br>
+      Begin date: <input class="datepicker" id="begin"/><br>
+      Finish date: <input class="datepicker" id="finish"/><br>
+
+      <input type="submit" class="btn btn-success" value="Add project" onclick="PostProject()"/>
     </div>
 
-    New project name: <input type="text" id="new"/><br>
-    New description: <input type="text" id="desc"/><br>
-
-    <input type="submit" value="Add project" onclick="PostProject()"/>
   </body>
 <html>

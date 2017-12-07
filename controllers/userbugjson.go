@@ -42,14 +42,11 @@ func (this *UserBugJson) Post() {
 func (this *UserBugJson) Update() {
 	bugJson := models.Bug{}
 
-	fmt.Println(this.Ctx.Input.RequestBody, string(this.Ctx.Input.RequestBody))
-
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &bugJson)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Println(bugJson)
 	models.UpdateBug(bugJson)
 }
 

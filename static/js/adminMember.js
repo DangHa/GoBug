@@ -26,7 +26,7 @@ function CreateProjectTableFromJSON(data) {
           tabCell.innerHTML = data[i][colJSON[j]];
       }
       var tabCell1 = tr.insertCell(-1);
-      tabCell1.innerHTML = '<input type="submit" value="Delete" onclick="DeleteMember()"/>'
+      tabCell1.innerHTML = '<input type="submit" class="btn btn-danger" value="Delete" onclick="DeleteMember()"/>'
   }
 
   // hide column 1

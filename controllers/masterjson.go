@@ -14,6 +14,14 @@ type MasterJsonController struct {
 
 func (this *MasterJsonController) Get() {
 
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+	}
+
 	jso := models.FindCompanyTheoStatus(0)
 
 	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200

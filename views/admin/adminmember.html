@@ -5,6 +5,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../static/js/adminMember.js"></script>
+    <script src="../static/js/logout.js"></script>
   <head>
 
   <body>
@@ -18,6 +19,7 @@
           <li><a href="http://localhost:8080/loginAdmin/">ProJect</a></li>
           <li class="active"><a href="#">Member</a></li>
           <li><a href="http://localhost:8080/adminstat/">Statistics</a></li>
+          <li align="right" ><a onclick="LogOut()" href="http://localhost:8080/">Log out</a></li>
         </ul>
       </div>
     </nav>
@@ -30,12 +32,6 @@
     <input type="hidden" id="email"/>
     <input type="hidden" id="position"/>
 
-    <div style="display: none" align="center">
-      <textarea disabled rows="5" cols="50" id="lietkeProject">
-      </textarea>
-      <hr>
-    </div>
-
 
     <input type="hidden" id="posit" value ="Developer"/>
     New member email: <input type="text" id="new" /><br>
@@ -43,6 +39,6 @@
       <option value= 'Developer'>Developer</option>
       <option value= 'Tester'>Tester</option>
     </select><br>
-    <input type="submit" value="Add" onclick="PostMember()"/>
+    <input type="submit" class="btn btn-success" value="Add" onclick="PostMember()"/>
   </body>
 <html>

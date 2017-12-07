@@ -29,6 +29,8 @@ type Project struct {
 	Id                 int    `orm:"column(idProject);null"`
 	ProjectName        string `orm:"column(projectName)"`
 	ProjectDescription string `orm:"column(projectDescription)"`
+	BeginDate          string `orm:"column(beginDate)"`
+	FinishDate         string `orm:"column(finishDate)"`
 }
 
 type UserProject struct {
@@ -44,6 +46,8 @@ type Bug struct {
 	SolutionDescription string `orm:"column(solutionDescription)"`
 	IdUser              int    `orm:"column(idUser)"`
 	IdProject           int    `orm:"column(idProject)"`
+	FoundDate           string `orm:"column(foundDate)"`
+	UpdateDate          string `orm:"column(updateDate)"`
 }
 
 type Master struct {

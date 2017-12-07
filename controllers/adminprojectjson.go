@@ -18,11 +18,25 @@ type ProjectJSON struct {
 	Id          string
 	Project     string
 	Description string
+	BeginDate   string
+	FinishDate  string
 }
 
 func (this *AdminProjectJsonController) Get() {
 
-	jso := models.FindProjectWithidAdmin(idAdmin) // Luu de xac dinh duoc admin nao dang nhap vao he thong
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+		return
+	}
+
+	idAdmin := userId.(int)
+	fmt.Println("Id: ", idAdmin)
+
+	jso := models.FindProjectWithIdAdmin(idAdmin) // Luu de xac dinh duoc admin nao dang nhap vao he thong
 
 	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200
 	if err != nil {
@@ -36,6 +50,18 @@ func (this *AdminProjectJsonController) Get() {
 }
 
 func (this *AdminProjectJsonController) Post() {
+
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+		return
+	}
+
+	idAdmin := userId.(int)
+
 	// JSON chuyen ve tu master html
 	project := ProjectJSON{}
 
@@ -44,12 +70,25 @@ func (this *AdminProjectJsonController) Post() {
 		fmt.Println(err)
 	}
 
-	newProject := models.Project{ProjectName: project.Project, ProjectDescription: project.Description}
+	newProject := models.Project{
+		ProjectName:        project.Project,
+		ProjectDescription: project.Description,
+		BeginDate:          ConvertDate(project.BeginDate),
+		FinishDate:         ConvertDate(project.FinishDate)}
 
 	models.AddProject(newProject, idAdmin) // Can co IDAdmin o sessionID
 }
 
 func (this *AdminProjectJsonController) Update() {
+
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+	}
+
 	// JSON chuyen ve tu master html
 	project := ProjectJSON{}
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &project)
@@ -58,12 +97,26 @@ func (this *AdminProjectJsonController) Update() {
 	}
 
 	idint, _ := strconv.Atoi(project.Id)
-	pj := models.Project{Id: idint, ProjectName: project.Project, ProjectDescription: project.Description}
+	pj := models.Project{
+		Id:                 idint,
+		ProjectName:        project.Project,
+		ProjectDescription: project.Description,
+		BeginDate:          project.BeginDate,
+		FinishDate:         project.FinishDate}
 
 	models.UpdateProject(pj)
 }
 
 func (this *AdminProjectJsonController) Delete() {
+
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+	}
+
 	// JSON chuyen ve tu master html
 	project := ProjectJSON{}
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &project)

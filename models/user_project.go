@@ -61,6 +61,24 @@ func FindUser(idProject int) []int {
 	return idusers
 }
 
+func FindUserOutSideProject(idProject int) []int {
+	o := orm.NewOrm()
+
+	var up []*UserProject
+	num, err := o.Raw("SELECT idUser FROM user WHERE status NOT LIKE 0 and idUser NOT IN (SELECT idUser FROM user_project WHERE idProject = ?)", idProject).QueryRows(&up)
+	if err != nil {
+		fmt.Println("user nums: ", num)
+	}
+
+	idusers := make([]int, num, num)
+
+	for i := 0; i < len(up); i++ {
+		idusers[i] = (*up[i]).IdUser
+	}
+
+	return idusers
+}
+
 func DeleteUserInProject(idUser, idProject int) {
 	o := orm.NewOrm()
 

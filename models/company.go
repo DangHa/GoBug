@@ -89,7 +89,7 @@ type Domain_Email struct {
 }
 
 // Dung cho Master
-func FindCompanyTheoStatus(s int) []Domain_Email { // 0 - la chua hoat dong, 1 - la da hoat dong
+func FindCompanyWithStatus(s int) []Domain_Email { // 0 - la chua hoat dong, 1 - la da hoat dong
 	o := orm.NewOrm()
 
 	var ct []*Company

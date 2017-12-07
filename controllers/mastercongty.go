@@ -24,6 +24,14 @@ func (this *MasterJsonActiveController) Get() {
 
 func (this *MasterJsonCongTyController) Get() {
 
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", 302)
+	}
+
 	jso := models.FindCompanyTheoStatus(1)
 
 	resBody, err := json.MarshalIndent(jso, "", "  ") //Get 200

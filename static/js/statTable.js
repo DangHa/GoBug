@@ -1,8 +1,8 @@
 function CreateStatTableFromJSON(data) {
 
   // Header
-  var col = ["Project", "Number of Member", "Number of Bug", "Number of Solution"];
-  var colJSON = ["Project", "Member", "Bug", "Solution"]; // de dong bo voi du lieu JSON
+  var col = ["Project", "Number of Member", "Number of Bug", "Number of Solution", "Begin Date", "Finish Date"];
+  var colJSON = ["Project", "Member", "Bug", "Solution", "BeginDate", "FinishDate"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("statTable");
@@ -27,6 +27,88 @@ function CreateStatTableFromJSON(data) {
       }
   }
 
+  ProjectsStatistics(data);
+
+}
+
+function ProjectsStatistics(data) {
+
+  // var NameProject [];
+  // for (var i = 0 ; i <data.length;i++) {
+  //   NameProject[i] = data[i]["Project"]
+  // }
+  var categories = [];
+  var numberBug = [];
+  var numberMember = [];
+  var numberSolution = [];
+  for (var i = 0;i<data.length;i++) {
+    categories.push(data[i].Project);
+    numberBug.push(data[i].Bug);
+    numberMember.push(data[i].Member);
+    numberSolution.push(data[i].Solution)
+  }
+
+  Highcharts.chart('container', {
+    chart: {
+        type: 'bar'
+    },
+    title: {
+        text: 'Projects'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: categories,
+        title: {
+            text: null
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Number',
+            align: 'high'
+        },
+        labels: {
+            overflow: 'justify'
+        }
+    },
+    tooltip: {
+        valueSuffix: ''
+    },
+    plotOptions: {
+        bar: {
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top',
+        x: -40,
+        y: 80,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+        shadow: true
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: 'Members',
+        data: numberMember
+    }, {
+        name: 'Bugs',
+        data: numberBug
+    }, {
+        name: 'Solutions',
+        data: numberSolution
+    }]
+  });
 }
 
 $( document ).ready(function() {
@@ -37,5 +119,4 @@ $( document ).ready(function() {
     CreateStatTableFromJSON(data)
     console.log(data);
   })
-
 });

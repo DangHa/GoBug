@@ -31,7 +31,7 @@ function CreateDomainTableFromJSON(data) {
 
 $( document ).ready(function() {
   //Get JSON
-  var url = document.getElementById('url').value
+  var url = "http://localhost:8080/master/getjsoncongty/";
   $.getJSON(url, function(data){
     console.log("It Worked!");
     CreateDomainTableFromJSON(data)

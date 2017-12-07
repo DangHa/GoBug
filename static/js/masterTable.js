@@ -87,7 +87,7 @@ function DeleteDomain() {
 
 $( document ).ready(function() {
   //Get JSON
-  var url = document.getElementById('url').value
+  var url = "http://localhost:8080/master/getjson/";
   $.getJSON(url, function(data){
     console.log("It Worked!");
     CreateDomainTableFromJSON(data)

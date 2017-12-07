@@ -23,21 +23,16 @@ type AddUserProject struct {
 }
 
 func (this *AdminMemberController) Post() {
-	userandproject := AddUserProject{}
+	userandproject := models.UserProject{}
 
 	err := json.Unmarshal(this.Ctx.Input.RequestBody, &userandproject)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	iduser := models.FindIdUserWithEmail(userandproject.Email)
-	if iduser == -1 {
-		return
-	}
-
 	up := models.UserProject{
-		IdUser:    iduser,
-		IdProject: userandproject.Idproject}
+		IdUser:    userandproject.IdUser,
+		IdProject: userandproject.IdProject}
 
 	models.AddUser_Project(up)
 }

@@ -2,8 +2,8 @@
 function CreateUserProjectTableFromJSON(data) {
 
   // Header
-  var col = ["#","Project", "Description", "Number of Bug"];
-  var colJSON = ["Id", "Project", "Description", "Number"]; // de dong bo voi du lieu JSON
+  var col = ["#","Project", "Description", "Number of Bug", "Begin Date", "Finish Date"];
+  var colJSON = ["Id", "Project", "Description", "Number", "BeginDate", "FinishDate"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("projectUserTable");
@@ -26,12 +26,13 @@ function CreateUserProjectTableFromJSON(data) {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i][colJSON[j]];
       }
-      if (true) { // Kiem tra xem sessionID cua user hay cua admin
+
+      if (data[i]["IdPosition"] === 2) { // Kiem tra xem sessionID cua user hay cua admin
         var tabCell = tr.insertCell(-1);
-        tabCell.innerHTML = '<input type="submit" value="Add bug" onclick="CreateBug()"/>';
+        tabCell.innerHTML = '<input type="submit" class="btn btn-success" value="Add bug" onclick="CreateBug()"/>';
       }
       var tabCell1 = tr.insertCell(-1);
-      tabCell1.innerHTML = '<input type="submit" value="Show all bugs" onclick="CreateBugTable()"/>';
+      tabCell1.innerHTML = '<input type="submit" class="btn btn-info" value="Show all bugs" onclick="CreateBugTable()"/>';
   }
 
   // hide column 1
@@ -61,8 +62,8 @@ function CreateUserProjectTableFromJSON(data) {
 function CreateBugProjectTableFromJSON(data) {
 
   // Header
-  var col = ["#","Bug", "Description", "Solution"];
-  var colJSON = ["Id", "BugName", "BugDescription", "SolutionDescription"]; // de dong bo voi du lieu JSON
+  var col = ["#","Bug", "Description", "Solution", "Found Date", "Update Date"];
+  var colJSON = ["Id", "BugName", "BugDescription", "SolutionDescription", "FoundDate", "UpdateDate"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("bugUserTable");
@@ -84,13 +85,20 @@ function CreateBugProjectTableFromJSON(data) {
       for (var j = 0; j < col.length; j++) {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i][colJSON[j]];
-          tabCell.contentEditable =true;
+
+          if (j<4) {
+            tabCell.contentEditable =true;
+          }
+
+          if (document.getElementById("projectUserTable").rows[1].cells.length === 8 && j === 3) {
+            tabCell.contentEditable =false;
+          }
       }
       var tabCell = tr.insertCell(-1);
-      tabCell.innerHTML = '<input type="submit" value="Update" onclick="UpdateBug()"/>';
+      tabCell.innerHTML = '<input type="submit" class="btn btn-warning" value="Update" onclick="UpdateBug()"/>';
 
       var tabCell1 = tr.insertCell(-1);
-      tabCell1.innerHTML = '<input type="submit" value="Delete" onclick="DeleteBug()"/>';
+      tabCell1.innerHTML = '<input type="submit" class="btn btn-danger" value="Delete" onclick="DeleteBug()"/>';
   }
 
   // hide column 1
@@ -106,6 +114,7 @@ function CreateBugProjectTableFromJSON(data) {
       document.getElementById("tenbug").value = this.cells[1].innerHTML;
       document.getElementById("mtbug").value = this.cells[2].innerHTML;
       document.getElementById("mtsolution").value = this.cells[3].innerHTML;
+      document.getElementById("founddate").value = this.cells[4].innerHTML;
 
       this.style.color = "blue";
     };
@@ -115,6 +124,7 @@ function CreateBugProjectTableFromJSON(data) {
       document.getElementById("tenbug").value = "";
       document.getElementById("mtbug").value = "";
       document.getElementById("mtsolution").value = "";
+      document.getElementById("founddate").value = "";
 
       this.style.color = "black";
     };
@@ -175,15 +185,16 @@ function PostBug() {
 function UpdateBug() {
 
   var idbug = parseInt(document.getElementById('idbug').value)
-  var name = document.getElementById('tenbug').value
-  var des = document.getElementById('mtbug').value
-  var solu = document.getElementById('mtsolution').value
+  var name = document.getElementById('tenbug').value;
+  var des = document.getElementById('mtbug').value;
+  var solu = document.getElementById('mtsolution').value;
+  var found = document.getElementById('founddate').value;
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/userbugjson/";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Id": idbug, "BugName": name, "BugDescription": des, "SolutionDescription": solu});
+  var data = JSON.stringify({"Id": idbug, "BugName": name, "BugDescription": des, "SolutionDescription": solu, "FoundDate": found});
   xhr.send(data);
   location.reload();
 }

@@ -56,6 +56,8 @@ func UpdateProject(pj Project) {
 	id, err := o.QueryTable("project").Filter("idProject", pj.Id).Update(orm.Params{
 		"projectname":        pj.ProjectName,
 		"projectDescription": pj.ProjectDescription, //Trang thai master gui 1 - chap nhan; 2 - tu choi
+		"beginDate":          pj.BeginDate,
+		"finishDate":         pj.FinishDate,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -98,7 +100,7 @@ func FindProjectWithIdProject(id int) Project {
 }
 
 //Liet ke ra bang idAdmin so du an cua cong ty
-func FindProjectWithidAdmin(idAdmin int) []Project {
+func FindProjectWithIdAdmin(idAdmin int) []Project {
 
 	idProject := FindProject(idAdmin)
 

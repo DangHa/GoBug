@@ -24,6 +24,8 @@ func (this *CongTyController) Get() {
 // Post
 func (this *CongTyController) Add() {
 
+	// Check if user is logged in
+
 	ctForm := CongTyForm{}
 
 	if err := this.ParseForm(&ctForm); err != nil {
@@ -40,7 +42,7 @@ func (this *CongTyController) Add() {
 	a := SendMail(from, to, subject, htmlContent)
 
 	if !a { //Neu ko co email nay thi dung
-		this.Redirect("/signupagain/", 302)
+		this.Redirect("/signup/again/", 302)
 		return
 	}
 

@@ -5,6 +5,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../static/js/userProject.js"></script>
+    <script src="../static/js/logout.js"></script>
   <head>
 
   <body>
@@ -15,8 +16,9 @@
           <a class="navbar-brand" href="#">GoBug</a>
         </div>
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">ProJect</a></li>
-          <li><a href="">Statistics</a></li>
+          <li class="active"><a href="#">ProJects</a></li>
+          <li><a href="http://localhost:8080/user/findbug/">Find bugs</a></li>
+          <li align="right" ><a onclick="LogOut()" href="http://localhost:8080/">Log out</a></li>
         </ul>
       </div>
     </nav>
@@ -28,6 +30,7 @@
     <input type="hidden" id="tenbug"/>
     <input type="hidden" id="mtbug"/>
     <input type="hidden" id="mtsolution"/>
+    <input type="hidden" id="founddate"/>
 
     <hr>
     <input type="hidden" id="id"/>
@@ -39,7 +42,7 @@
       New description: <input type="text" id="desc"/><br>
       New solution: <input type="text" id="solution"/><br>
 
-      <input type="submit" value="Add" onclick="PostBug()"/>
+      <input type="submit" class="btn btn-success" value="Add" onclick="PostBug()"/>
     <div>
 
 

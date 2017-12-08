@@ -33,6 +33,19 @@ func FindBugWithNameBug(bugName string) []Bug {
 	return bugs
 }
 
+func FindBugWithIdBug(idBug int) Bug {
+	o := orm.NewOrm()
+
+	var bug Bug
+	err := o.QueryTable("bug").Filter("idBug", idBug).One(&bug)
+
+	if err == orm.ErrNoRows {
+		return bug
+	}
+
+	return bug
+}
+
 func AddBug(bug Bug) {
 	o := orm.NewOrm()
 
@@ -59,13 +72,30 @@ func DeleteBugWithIdBug(id int) {
 	fmt.Println("Done!")
 }
 
-func UpdateBug(bug Bug) {
+func UpdateBugByTester(bug Bug) {
+	o := orm.NewOrm()
+
+	id, err := o.QueryTable("bug").Filter("idBug", bug.Id).Update(orm.Params{
+		"bugName":        bug.BugName,
+		"bugDescription": bug.BugDescription,
+		"updateDate":     time.Now(),
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("Successful update!,", id)
+}
+
+func UpdateBugByDev(bug Bug) {
 	o := orm.NewOrm()
 
 	id, err := o.QueryTable("bug").Filter("idBug", bug.Id).Update(orm.Params{
 		"bugName":             bug.BugName,
 		"bugDescription":      bug.BugDescription,
 		"solutionDescription": bug.SolutionDescription,
+		"IdDev":               bug.IdDev,
 		"updateDate":          time.Now(),
 	})
 	if err != nil {

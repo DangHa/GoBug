@@ -137,6 +137,7 @@ type AdminMemberProjectJsonController struct {
 
 type MemberProject struct {
 	Id        int
+	UserName  string
 	Member    string
 	Position  string
 	IdProject int
@@ -159,6 +160,7 @@ func (this *AdminMemberProjectJsonController) Post() {
 		if user.IdPosition != 0 {
 			member := MemberProject{
 				Id:       user.Id,
+				UserName: user.UserName,
 				Member:   user.Email,
 				Position: models.FindPosition(user.IdPosition)}
 

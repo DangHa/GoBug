@@ -1,8 +1,8 @@
 function CreateProjectTableFromJSON(data) {
 
   // Header
-  var col = ["#", "Email", "Position", "Number of project"];
-  var colJSON = ["Id", "Email", "Position", "Number"]; // de dong bo voi du lieu JSON
+  var col = ["#", "Name", "Email", "Position", "Number of project"];
+  var colJSON = ["Id", "UserName", "Email", "Position", "Number"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("memberTable");
@@ -60,6 +60,7 @@ function Positi(obj) {
 }
 
 function PostMember() {
+  var name = document.getElementById('newName').value
   var email = document.getElementById('new').value
   var position = document.getElementById('posit').value
 
@@ -67,8 +68,9 @@ function PostMember() {
   var url = "http://localhost:8080/adminmemberjson/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Email": email, "Position": position});
+  var data = JSON.stringify({"UserName": name,"Email": email, "Position": position});
 
+  console.log(data);
   xhr.send(data);
   location.reload();
 }

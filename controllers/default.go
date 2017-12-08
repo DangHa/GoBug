@@ -10,6 +10,19 @@ import (
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
+var (
+	keySengrid     = "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"
+	adminPosition  = 0
+	idMaster       = 1
+	redirectStatus = 302
+	activeStatus   = 1
+	waitStatus     = 0
+	notFound       = -1
+
+	tester    = 2
+	developer = 1
+)
+
 type MainController struct {
 	beego.Controller
 }
@@ -40,16 +53,6 @@ func (this *MainController) Get() {
 	this.Redirect("/login/", redirectStatus)
 
 }
-
-var (
-	keySengrid     = "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"
-	adminPosition  = 0
-	idMaster       = 1
-	redirectStatus = 302
-	activeStatus   = 1
-	waitStatus     = 0
-	notFound       = -1
-)
 
 //Chuyen lai theo chuan de cho vao database
 func ConvertDate(date string) string {

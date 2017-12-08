@@ -25,6 +25,7 @@ type Company struct {
 
 type User struct {
 	Id         int    `orm:"column(idUser);null"`
+	UserName   string `orm:"column(userName)"`
 	Email      string `orm:"column(email)"`
 	Password   string `orm:"column(password)"`
 	IdCompany  int    `orm:"column(idCompany)"`
@@ -56,7 +57,8 @@ type Bug struct {
 	BugName             string `orm:"column(bugName)"`
 	BugDescription      string `orm:"column(bugDescription)"`
 	SolutionDescription string `orm:"column(solutionDescription)"`
-	IdUser              int    `orm:"column(idUser)"`
+	IdDev               int    `orm:"column(idDev)"`
+	IdTest              int    `orm:"column(idTest)"`
 	IdProject           int    `orm:"column(idProject)"`
 	FoundDate           string `orm:"column(foundDate)"`
 	UpdateDate          string `orm:"column(updateDate)"`

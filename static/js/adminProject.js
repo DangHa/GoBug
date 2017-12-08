@@ -76,8 +76,8 @@ function CreateProjectTableFromJSON(data) {
 function CreateMemberProjectTableFromJSON(data) {
 
   // Header
-  var col = ["#","Member", "Position"];
-  var colJSON = ["Id", "Member", "Position"]; // de dong bo voi du lieu JSON
+  var col = ["#","Name","Member","Position"];
+  var colJSON = ["Id", "UserName","Member", "Position"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("membersTable");
@@ -131,8 +131,8 @@ function CreateMemberProjectTableFromJSON(data) {
 function CreateAddMemberProjectTableFromJSON(data) {
 
   // Header
-  var col = ["#","Member", "Position"];
-  var colJSON = ["Id", "Member", "Position"]; // de dong bo voi du lieu JSON
+  var col = ["#","Name","Member","Position"];
+  var colJSON = ["Id", "UserName","Member", "Position"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("addmemberTable");

@@ -62,8 +62,8 @@ function CreateUserProjectTableFromJSON(data) {
 function CreateBugProjectTableFromJSON(data) {
 
   // Header
-  var col = ["#","Bug", "Description", "Solution", "Found Date", "Update Date"];
-  var colJSON = ["Id", "BugName", "BugDescription", "SolutionDescription", "FoundDate", "UpdateDate"]; // de dong bo voi du lieu JSON
+  var col = ["#","Bug", "Description", "Solution", "Tester", "Developer", "Found Date", "Update Date"];
+  var colJSON = ["Id", "BugName", "BugDescription", "SolutionDescription", "Tester", "Developer", "FoundDate", "UpdateDate"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("bugUserTable");
@@ -133,6 +133,7 @@ function CreateBugProjectTableFromJSON(data) {
 }
 
 function CreateBug() {
+  document.getElementById('code').style.display = "none";
   if (document.getElementById('newBug').style.display === "none"){
     document.getElementById('newBug').style.display = "block";
     document.getElementById('id-add').value = document.getElementById('id').value;
@@ -171,10 +172,13 @@ function PostBug() {
   var idproject = parseInt(document.getElementById('id-add').value)
   var name = document.getElementById('new').value
   var des = document.getElementById('desc').value
+  document.getElementById('code').style.display = "none";
 
   if (name === "") {
+    document.getElementById('code').style.display = "block";
     return
   }
+
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/userprojectjson/";
   xhr.open("POST", url, true);
@@ -191,13 +195,13 @@ function UpdateBug() {
   var name = document.getElementById('tenbug').value;
   var des = document.getElementById('mtbug').value;
   var solu = document.getElementById('mtsolution').value;
-  var found = document.getElementById('founddate').value;
+  var idproject = parseInt(document.getElementById('id-add').value);
 
   var xhr = new XMLHttpRequest();
   var url = "http://localhost:8080/userbugjson/";
   xhr.open("PUT", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"Id": idbug, "BugName": name, "BugDescription": des, "SolutionDescription": solu, "FoundDate": found});
+  var data = JSON.stringify({"Id": idbug, "BugName": name, "BugDescription": des, "SolutionDescription": solu, "IdProject": idproject});
   xhr.send(data);
   location.reload();
 }

@@ -64,6 +64,7 @@ func (this *AdminAddMemberJsonControllers) Post() {
 		if user.IdPosition != adminPosition {
 			member := MemberProject{
 				Id:       user.Id,
+				UserName: user.UserName,
 				Member:   user.Email,
 				Position: models.FindPosition(user.IdPosition)}
 
@@ -89,6 +90,7 @@ type AdminMemberJsonControllers struct {
 
 type MemberInformation struct {
 	Id       string
+	UserName string
 	Email    string
 	Position string
 	Number   int
@@ -114,6 +116,7 @@ func (this *AdminMemberJsonControllers) Get() {
 		if u[i].Id != idAdmin {
 			member := MemberInformation{
 				Id:       strconv.Itoa(u[i].Id),
+				UserName: u[i].UserName,
 				Email:    u[i].Email,
 				Position: models.FindPosition(u[i].IdPosition),
 				Number:   len(models.FindProject(u[i].Id))}
@@ -186,6 +189,7 @@ func (this *AdminMemberJsonControllers) Post() {
 	}
 
 	user := models.User{
+		UserName:   member.UserName,
 		Email:      member.Email,
 		Password:   "1",
 		IdCompany:  models.FindCongTyByIdUser(idAdmin),

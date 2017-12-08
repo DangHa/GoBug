@@ -2,8 +2,8 @@
 function CreateFindBugTableFromJSON(data) {
 
   // Header
-  var col = ["#","Bug", "Project","Description", "Solution", "Tester","Found Date", "Update Date"];
-  var colJSON = ["Id", "BugName", "Project", "BugDescription", "SolutionDescription", "User","FoundDate", "UpdateDate"]; // de dong bo voi du lieu JSON
+  var col = ["#","Bug", "Project","Description", "Solution", "Tester","Developer","Found Date", "Update Date"];
+  var colJSON = ["Id", "BugName", "Project", "BugDescription", "SolutionDescription", "Tester","Developer","FoundDate", "UpdateDate"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("findbug");

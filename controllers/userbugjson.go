@@ -25,7 +25,23 @@ func (this *UserBugJson) Post() {
 		fmt.Println(err)
 	}
 
-	bugs := models.FindBugWithIdProject(bugJson.IdProject)
+	bugsjson := models.FindBugWithIdProject(bugJson.IdProject)
+
+	bugs := make([]FindBug, len(bugsjson), len(bugsjson))
+	for i := 0; i < len(bugs); i++ {
+		bug := FindBug{
+			Id:                  bugsjson[i].Id,
+			BugName:             bugsjson[i].BugName,
+			BugDescription:      bugsjson[i].BugDescription,
+			SolutionDescription: bugsjson[i].SolutionDescription,
+			Tester:              models.FindUserWithIdUser(bugsjson[i].IdTest).UserName,
+			Developer:           models.FindUserWithIdUser(bugsjson[i].IdDev).UserName,
+			Project:             models.FindProjectWithIdProject(bugsjson[i].IdProject).ProjectName,
+			FoundDate:           bugsjson[i].FoundDate,
+			UpdateDate:          bugsjson[i].UpdateDate,
+		}
+		bugs[i] = bug
+	}
 
 	resBody, err := json.MarshalIndent(bugs, "", "  ") //Get 200
 	if err != nil {
@@ -67,7 +83,17 @@ func (this *UserBugJson) Update() {
 		}
 	}
 
-	models.UpdateBug(bugJson)
+	//Kiem tra la Tester hay Dev xem do co phai la bug cua minh ko
+	bug := models.FindBugWithIdBug(bugJson.Id)
+	user := models.FindUserWithIdUser(idUser)
+	if user.IdPosition == tester && user.Id == bug.IdTest {
+		models.UpdateBugByTester(bugJson)
+	}
+	if user.IdPosition == developer && (user.Id == bug.IdDev || bug.IdDev == 0) {
+		bugJson.IdDev = user.Id
+		models.UpdateBugByDev(bugJson)
+	}
+
 }
 
 func (this *UserBugJson) Delete() {
@@ -117,7 +143,8 @@ type FindBug struct {
 	BugName             string
 	BugDescription      string
 	SolutionDescription string
-	User                string
+	Tester              string
+	Developer           string
 	Project             string
 	FoundDate           string
 	UpdateDate          string
@@ -131,6 +158,8 @@ func (this *UserFindBug) Post() {
 		fmt.Println(err)
 	}
 
+	fmt.Println("bugJson:", bugJson)
+
 	bugsjson := models.FindBugWithNameBug(bugJson.BugName)
 
 	bugs := make([]FindBug, len(bugsjson), len(bugsjson))
@@ -140,7 +169,8 @@ func (this *UserFindBug) Post() {
 			BugName:             bugsjson[i].BugName,
 			BugDescription:      bugsjson[i].BugDescription,
 			SolutionDescription: bugsjson[i].SolutionDescription,
-			User:                models.FindUserWithIdUser(bugsjson[i].IdUser).Email,
+			Tester:              models.FindUserWithIdUser(bugsjson[i].IdTest).UserName,
+			Developer:           models.FindUserWithIdUser(bugsjson[i].IdDev).UserName,
 			Project:             models.FindProjectWithIdProject(bugsjson[i].IdProject).ProjectName,
 			FoundDate:           bugsjson[i].FoundDate,
 			UpdateDate:          bugsjson[i].UpdateDate,
@@ -252,7 +282,7 @@ func (this *UserProjectJson) Post() {
 
 	bugJson.FoundDate = time.Now().String()
 
-	bugJson.IdUser = idUser
+	bugJson.IdTest = idUser
 
 	models.AddBug(bugJson)
 }

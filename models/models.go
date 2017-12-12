@@ -56,6 +56,7 @@ type Bug struct {
 	Id                  int    `orm:"column(idBug);null"`
 	BugName             string `orm:"column(bugName)"`
 	BugDescription      string `orm:"column(bugDescription)"`
+	Category            string `orm:"column(category)"`
 	SolutionDescription string `orm:"column(solutionDescription)"`
 	IdDev               int    `orm:"column(idDev)"`
 	IdTest              int    `orm:"column(idTest)"`

@@ -105,3 +105,21 @@ func UpdateBugByDev(bug Bug) {
 
 	fmt.Println("Successful update!,", id)
 }
+
+type BugStatJson struct {
+	Category string // Category + nguoi giai duoc nhieu nhat
+	Bug      int    `orm:"column(Bug)"`
+	Project  int    `orm:"column(Project)"`
+}
+
+func FindCategoryOfCompany(idAdmin int) []BugStatJson {
+	o := orm.NewOrm()
+
+	var bs []BugStatJson
+	num, err := o.Raw("Select category, count(idBug) as Bug, count(idProject) as Project from bug where idProject In (select idProject from user_project where idUser = ?) group by category", idAdmin).QueryRows(&bs)
+	if err != nil {
+		fmt.Println("user nums: ", num)
+	}
+
+	return bs
+}

@@ -154,7 +154,7 @@ func (this *AdminMemberJsonControllers) Post() {
 		fmt.Println(err)
 	}
 
-	//Check email cua member moi
+	//Check email cua member moi co dung form khong
 	for i := 0; i < len(member.Email); i++ {
 		if member.Email[i] == '@' && len(member.Email)-5 > i {
 			break
@@ -179,7 +179,7 @@ func (this *AdminMemberJsonControllers) Post() {
 	from := "tj.hadv@hblab.vn"
 	to := member.Email
 	subject := "Yeu cau them cong ty"
-	htmlContent := "<strong> Bạn được thêm vào công ty!</strong><br>Password của bạn là: 1"
+	htmlContent := "<strong> Bạn được thêm vào một công ty!</strong><br>Password của bạn là: 1 <br>Bạn có thể vào page để đổi mật khẩu!"
 
 	checkSend := SendMail(from, to, subject, htmlContent)
 
@@ -191,7 +191,7 @@ func (this *AdminMemberJsonControllers) Post() {
 	user := models.User{
 		UserName:   member.UserName,
 		Email:      member.Email,
-		Password:   "1",
+		Password:   password,
 		IdCompany:  models.FindCongTyByIdUser(idAdmin),
 		IdPosition: models.FindPositionWithName(member.Position),
 		Status:     activeStatus}
@@ -215,6 +215,8 @@ func (this *AdminMemberJsonControllers) Delete() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	fmt.Println(member)
 
 	models.DeleteUserByUpdateStatus(member.Email)
 }

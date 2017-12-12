@@ -18,6 +18,7 @@ func init() {
 	beego.Router("/userprojectjson/", &controllers.UserProjectJson{}, "get:Get;post:Post")
 	beego.Router("/userbugjson/", &controllers.UserBugJson{}, "get:Get;post:Post;put:Update;delete:Delete")
 	beego.Router("/user/findbug/", &controllers.UserFindBug{}, "get:Get;post:Post")
+	beego.Router("/user/profile/", &controllers.UserProfile{}, "get:Get;post:Post")
 
 	// Danh cho Admin
 	beego.Router("/loginAdmin/", &controllers.LoginAdminController{}, "get:Get;post:LogOut")
@@ -28,6 +29,8 @@ func init() {
 	beego.Router("/admin/addmember/", &controllers.AdminAddMemberJsonControllers{}, "post:Post")
 	beego.Router("/adminstat/", &controllers.AdminStatControllers{})
 	beego.Router("/adminstatjson/", &controllers.AdminStatJsonControllers{})
+	beego.Router("/admin/bugstat/json/", &controllers.AdminBugStatJsonControllers{})
+	beego.Router("/admin/devstat/json/", &controllers.AdminDevStatJsonControllers{})
 
 	// Danh cho master
 	beego.Router("/master/login/", &controllers.MasterLoginController{}, "get:Get;post:Login")

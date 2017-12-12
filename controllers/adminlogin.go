@@ -40,6 +40,7 @@ func (this *AdminStatControllers) Get() {
 	this.Render()
 }
 
+//Bang project
 type AdminStatJsonControllers struct {
 	beego.Controller
 }
@@ -90,9 +91,69 @@ func (this *AdminStatJsonControllers) Get() { // lay idAdmin de tim
 		stats = append(stats, stat)
 	}
 
-	fmt.Println(stats)
-
 	resBody, err := json.MarshalIndent(stats, "", "  ") //Get 200
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	this.Ctx.Output.Header("Content-Type", "application/json; charset=utf-8")
+	this.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	this.Ctx.Output.Body(resBody)
+	this.ServeJSONP()
+}
+
+//Bieu do Bug
+type AdminBugStatJsonControllers struct {
+	beego.Controller
+}
+
+func (this *AdminBugStatJsonControllers) Get() {
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", redirectStatus)
+		return
+	}
+
+	idAdmin := userId.(int)
+
+	category := models.FindCategoryOfCompany(idAdmin)
+
+	resBody, err := json.MarshalIndent(category, "", "  ") //Get 200
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	this.Ctx.Output.Header("Content-Type", "application/json; charset=utf-8")
+	this.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	this.Ctx.Output.Body(resBody)
+	this.ServeJSONP()
+}
+
+//Bieu do Dev
+type AdminDevStatJsonControllers struct {
+	beego.Controller
+}
+
+func (this *AdminDevStatJsonControllers) Get() {
+	// Check if user is logged in
+	session := this.StartSession()
+	userId := session.Get("UserID")
+
+	if userId == nil {
+		this.Redirect("/", redirectStatus)
+		return
+	}
+
+	idAdmin := userId.(int)
+
+	rank := models.RankDev(idAdmin)
+
+	fmt.Println(rank)
+
+	resBody, err := json.MarshalIndent(rank, "", "  ") //Get 200
 	if err != nil {
 		log.Fatal(err)
 	}

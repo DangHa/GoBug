@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"bugmanage/models"
+	"fmt"
 
 	"github.com/astaxie/beego"
 )
@@ -22,6 +23,7 @@ func (this *LoginController) Get() {
 
 //Post
 func (this *LoginController) Login() {
+
 	u := User{}
 
 	if err := this.ParseForm(&u); err != nil {
@@ -35,6 +37,8 @@ func (this *LoginController) Login() {
 		this.Redirect("/login/again/", redirectStatus)
 		return
 	}
+
+	fmt.Println(u.Email, u.Password)
 
 	// Check if user is logged in
 	session := this.StartSession()

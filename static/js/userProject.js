@@ -62,8 +62,8 @@ function CreateUserProjectTableFromJSON(data) {
 function CreateBugProjectTableFromJSON(data) {
 
   // Header
-  var col = ["#","Bug", "Description", "Solution", "Tester", "Developer", "Found Date", "Update Date"];
-  var colJSON = ["Id", "BugName", "BugDescription", "SolutionDescription", "Tester", "Developer", "FoundDate", "UpdateDate"]; // de dong bo voi du lieu JSON
+  var col = ["#","Bug", "Description", "Solution", "Category", "Tester", "Developer", "Found Date", "Update Date"];
+  var colJSON = ["Id", "BugName","BugDescription", "SolutionDescription", "Category" ,"Tester", "Developer", "FoundDate", "UpdateDate"]; // de dong bo voi du lieu JSON
 
   // Goi den bang can tim
   var table = document.getElementById("bugUserTable");
@@ -167,11 +167,17 @@ function CreateBugTable() {
   });
 }
 
+function Catego(obj) {
+  document.getElementById('cate').value = obj.value
+}
+
 function PostBug() {
 
   var idproject = parseInt(document.getElementById('id-add').value)
   var name = document.getElementById('new').value
   var des = document.getElementById('desc').value
+  var category = document.getElementById('cate').value
+
   document.getElementById('code').style.display = "none";
 
   if (name === "") {
@@ -183,7 +189,7 @@ function PostBug() {
   var url = "http://localhost:8080/userprojectjson/";
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var data = JSON.stringify({"BugName": name, "BugDescription": des, "IdProject": idproject});
+  var data = JSON.stringify({"BugName": name, "BugDescription": des, "Category": category, "IdProject": idproject});
   console.log(data);
   xhr.send(data);
   location.reload();

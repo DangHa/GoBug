@@ -18,6 +18,7 @@
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">ProJects</a></li>
           <li><a href="http://localhost:8080/user/findbug/">Find bugs</a></li>
+          <li><a href="http://localhost:8080/user/profile/">Your Profile</a></li>
           <li align="right" ><a onclick="LogOut()" href="http://localhost:8080/">Log out</a></li>
         </ul>
       </div>
@@ -37,9 +38,17 @@
 
     <input type="hidden" id="id-add"/>
 
+    <input type="hidden" id="cate" value="Logic"/>
+
     <div id="newBug" style = "display: none">
-      New bug name: <input type="text" id="new"/><br>
+      New bug name: <input type="text" id="new"required><br>
       New description: <input type="text" id="desc"/><br>
+      Category: <select id="cate" onchange="Catego(this)">
+        <option value = 'Logic'>Logic </option>
+        <option value = 'Dont understand spec'>Don't understand spec </option>
+        <option value = 'Dont know tech'>Don't know tech </option>
+        <option value = 'Carelessness'>Carelessness</option>
+      </select><br>
 
       <input type="submit" class="btn btn-success" value="Add" onclick="PostBug()"/>
     <div>

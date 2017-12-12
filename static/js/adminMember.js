@@ -39,8 +39,8 @@ function CreateProjectTableFromJSON(data) {
     table.rows[i].onmouseover = function(){
 
       document.getElementById("id").value = this.cells[0].innerHTML;
-      document.getElementById("email").value = this.cells[1].innerHTML;
-      document.getElementById('position').value = this.cells[2].innerHTML;
+      document.getElementById("email").value = this.cells[2].innerHTML;
+      document.getElementById('position').value = this.cells[3].innerHTML;
 
       this.style.color = "blue";
     };

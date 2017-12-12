@@ -34,6 +34,7 @@ func (this *UserBugJson) Post() {
 			BugName:             bugsjson[i].BugName,
 			BugDescription:      bugsjson[i].BugDescription,
 			SolutionDescription: bugsjson[i].SolutionDescription,
+			Category:            bugsjson[i].Category,
 			Tester:              models.FindUserWithIdUser(bugsjson[i].IdTest).UserName,
 			Developer:           models.FindUserWithIdUser(bugsjson[i].IdDev).UserName,
 			Project:             models.FindProjectWithIdProject(bugsjson[i].IdProject).ProjectName,
@@ -143,6 +144,7 @@ type FindBug struct {
 	BugName             string
 	BugDescription      string
 	SolutionDescription string
+	Category            string
 	Tester              string
 	Developer           string
 	Project             string
@@ -269,6 +271,8 @@ func (this *UserProjectJson) Post() {
 		return
 	}
 
+	fmt.Println(bugJson)
+
 	// kiem tra xem project nay user co duoc tham gia khong
 	projects := models.FindProject(idUser)
 	for i := 0; i < len(projects); i++ {
@@ -285,4 +289,52 @@ func (this *UserProjectJson) Post() {
 	bugJson.IdTest = idUser
 
 	models.AddBug(bugJson)
+}
+
+// hien thi cac project cua user nay
+type UserProfile struct {
+	beego.Controller
+}
+
+type userProfile struct {
+	Name                 string
+	Password             string
+	PasswordConfirmation string
+}
+
+func (this *UserProfile) Get() {
+	this.TplName = "profile.html"
+	this.Render()
+}
+
+func (this *UserProfile) Post() {
+	// Check if user is logged in
+	session := this.StartSession()
+	User := session.Get("UserID")
+
+	if User == nil {
+		return
+	}
+
+	idUser := User.(int)
+
+	// Lay du lieu tu json
+	profile := userProfile{}
+
+	if err := this.ParseForm(&profile); err != nil {
+		this.Redirect("/", redirectStatus)
+		return
+	}
+
+	user := models.FindUserWithIdUser(idUser)
+	if profile.Name != "" {
+		user.UserName = profile.Name
+	}
+
+	if profile.Password != "d41d8cd98f00b204e9800998ecf8427e" && profile.Password == profile.PasswordConfirmation { //d41d8cd98f00b204e9800998ecf8427e == ""
+		user.Password = profile.Password
+	}
+
+	models.UpdateInformation(user)
+	this.Redirect("/", redirectStatus)
 }

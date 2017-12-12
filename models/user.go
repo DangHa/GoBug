@@ -45,6 +45,22 @@ func UpdateUser(email string) {
 	fmt.Println("Successful update!,", id)
 }
 
+//Update information
+func UpdateInformation(user User) {
+	o := orm.NewOrm()
+
+	id, err := o.QueryTable("user").Filter("idUser", user.Id).Update(orm.Params{
+		"userName": user.UserName,
+		"password": user.Password,
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("Successful update!,", id)
+}
+
 func DeleteUserByUpdateStatus(email string) {
 	o := orm.NewOrm()
 
@@ -165,4 +181,24 @@ func FindUserWithIdUser(iduser int) User {
 	}
 
 	return u
+}
+
+type RankDevJson struct {
+	UserName string `orm:"column(userName)"`
+	Project  int    `orm:"column(Project)"`
+	Solution int    `orm:"column(Solution)"`
+}
+
+func RankDev(idAdmin int) []RankDevJson {
+	o := orm.NewOrm()
+
+	var bs []RankDevJson
+	num, err := o.Raw("select userName, (select count(idProject) from user_project where idUser = x.idUser) as Project, (select count(idDev) from bug where idDev = x.idUser and solutionDescription not like '') as Solution from user x where idPosition = 1 and idCompany like (select idCompany from user where idUser = ?)", idAdmin).QueryRows(&bs)
+	if err != nil {
+		fmt.Println("user nums: ", num)
+	}
+
+	fmt.Println("rank: ", bs)
+
+	return bs
 }

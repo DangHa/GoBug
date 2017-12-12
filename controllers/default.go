@@ -21,6 +21,8 @@ var (
 
 	tester    = 2
 	developer = 1
+
+	password = "1"
 )
 
 type MainController struct {

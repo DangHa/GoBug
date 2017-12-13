@@ -114,7 +114,7 @@ function CreateBugProjectTableFromJSON(data) {
       document.getElementById("tenbug").value = this.cells[1].innerHTML;
       document.getElementById("mtbug").value = this.cells[2].innerHTML;
       document.getElementById("mtsolution").value = this.cells[3].innerHTML;
-      document.getElementById("founddate").value = this.cells[4].innerHTML;
+      document.getElementById("founddate").value = this.cells[7].innerHTML;
 
       this.style.color = "blue";
     };

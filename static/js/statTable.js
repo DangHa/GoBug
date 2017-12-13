@@ -121,7 +121,7 @@ function BugStatistics(data) {
         type: 'bar'
     },
     title: {
-        text: 'Bug'
+        text: 'Category'
     },
     subtitle: {
         text: ''

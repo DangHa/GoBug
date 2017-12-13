@@ -115,16 +115,22 @@ func (this *UserBugJson) Delete() {
 		fmt.Println(err)
 	}
 
+	fmt.Println(bugJson)
+
 	// kiem tra xem project nay user co duoc tham gia khong
 	projects := models.FindProject(idUser)
+	bug := models.FindBugWithIdBug(bugJson.Id)
+
 	for i := 0; i < len(projects); i++ {
-		if projects[i] == bugJson.IdProject {
+		if projects[i] == bug.IdProject {
 			break
 		}
 		if i == len(projects)-1 {
 			return
 		}
 	}
+
+	fmt.Println(bugJson)
 
 	models.DeleteBugWithIdBug(bugJson.Id)
 }
@@ -336,5 +342,11 @@ func (this *UserProfile) Post() {
 	}
 
 	models.UpdateInformation(user)
+
+	// Xóa sessions
+	if User != nil {
+		// UserID is set and can be deleted
+		session.Delete("UserID")
+	}
 	this.Redirect("/", redirectStatus)
 }

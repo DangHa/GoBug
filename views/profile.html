@@ -24,14 +24,24 @@
       </div>
     </nav>
 
+    <br><br>
     <form class="form" action="http://localhost:8080/user/profile/" method="POST" name="profileForm" onsubmit="return check()">
-         New name:<br>
-         <input type="text" placeholder="Name" name="Name"><br>
-         New password:<br>
-         <input type="password" placeholder="New password" name="Password"><br>
-         New password confirmation:<br>
-         <input type="password" placeholder="New password confirmation" name="PasswordConfirmation"><br>
-         <button type="submit">Update Profile</button>
+         <div class="form-group">
+           <label for="usr">New name:</label>
+           <input type="text" class="form-control" placeholder="Name" name="Name">
+         </div>
+         <div class="form-group">
+           <label for="pwd">New password:</label>
+           <input type="password" class="form-control" placeholder="New password" name="Password">
+         </div>
+         <div class="form-group">
+           <label for="pwd">New password confirmation:</label>
+           <input type="password" class="form-control" placeholder="New password confirmation" name="PasswordConfirmation">
+         </div>
+         <br>
+         <div align="center">
+         <button type="submit" class="btn btn-info">Update Profile</button>
+         </div>
     </form>
 
     <h5 id="code" align="center" style="color: red;display:none;"> Password Confirmation isn't Password!</h5>

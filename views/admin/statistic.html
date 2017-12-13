@@ -31,17 +31,37 @@
 
     <div class="container">
       <div class="btn-group btn-group-justified">
-        <a href="#" class="btn btn-primary">Projects</a>
-        <a href="#" class="btn btn-primary">Developers</a>
-        <a href="#" class="btn btn-primary">Categories bug</a>
+        <a href="#" class="btn btn-default" onclick="statistic('project')">Projects</a>
+        <a href="#" class="btn btn-default" onclick="statistic('develop')">Developers</a>
+        <a href="#" class="btn btn-default" onclick="statistic('bug')">Categories bug</a>
       </div>
     </div>
 
     <br>
-    <div id="project" style="min-width : 500px; max-width: 900px; height: 450px; margin: 0 auto" style="display: none"></div>
-    <div id="develop" style="min-width: 500px; max-width: 900px; height: 450px; margin: 0 auto" style="display: none"></div>
-    <div id="bug" style="min-width: 500px; max-width: 900px; height: 450px; margin: 0 auto" style="display: none"></div>
+    <div id="project" style="min-width : 500px; max-width: 900px; height: 450px; margin: 0 auto; display: block"></div><br>
+    <div id="develop" style="min-width: 500px; max-width: 900px; height: 450px; margin: 0 auto; display: none"></div><br>
+    <div id="bug" style="min-width: 500px; max-width: 900px; height: 450px; margin: 0 auto; display: none"></div><br>
 
+    <script>
+      function statistic(nameStatistics) {
+        if (nameStatistics === 'project') {
+          document.getElementById('project').style.display = "block";
+          document.getElementById('bug').style.display = "none";
+          document.getElementById('develop').style.display = "none";
+        }
+        if (nameStatistics === 'develop') {
+          document.getElementById('project').style.display = "none";
+          document.getElementById('bug').style.display = "none";
+          document.getElementById('develop').style.display = "block";
+        }
+        if (nameStatistics === 'bug') {
+          document.getElementById('project').style.display = "none";
+          document.getElementById('develop').style.display = "none";
+          document.getElementById('bug').style.display = "block";
+        }
+      }
+
+    </script>
 
   </body>
 <html>

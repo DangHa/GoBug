@@ -91,7 +91,12 @@ func (this *UserBugJson) Update() {
 		models.UpdateBugByTester(bugJson)
 	}
 	if user.IdPosition == developer && (user.Id == bug.IdDev || bug.IdDev == 0) {
-		bugJson.IdDev = user.Id
+		if bugJson.SolutionDescription == "" {
+			bugJson.IdDev = 0
+		} else {
+			bugJson.IdDev = user.Id
+		}
+		fmt.Println(bugJson)
 		models.UpdateBugByDev(bugJson)
 	}
 
@@ -115,8 +120,6 @@ func (this *UserBugJson) Delete() {
 		fmt.Println(err)
 	}
 
-	fmt.Println(bugJson)
-
 	// kiem tra xem project nay user co duoc tham gia khong
 	projects := models.FindProject(idUser)
 	bug := models.FindBugWithIdBug(bugJson.Id)
@@ -129,8 +132,6 @@ func (this *UserBugJson) Delete() {
 			return
 		}
 	}
-
-	fmt.Println(bugJson)
 
 	models.DeleteBugWithIdBug(bugJson.Id)
 }

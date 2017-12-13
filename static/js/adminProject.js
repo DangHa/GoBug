@@ -315,10 +315,6 @@ function DeleteProject() {
 }
 
 $( document ).ready(function() {
-  $('.datepicker').datepicker({
-    format: 'mm/dd/yyyy',
-    startDate: '-3d'
-  });
   //Get JSON
   var url = 'http://localhost:8080/adminprojectjson/'
   $.getJSON(url, function(data){

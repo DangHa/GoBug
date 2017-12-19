@@ -1,6 +1,8 @@
 function encode(){
+
   document.forms["loginForm"]["Password"].value = md5(document.forms["loginForm"]["Password"].value);
   console.log(document.forms["loginForm"]["Password"].value);
+
   return true;
 }
 

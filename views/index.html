@@ -33,7 +33,6 @@
     <input type="hidden" id="mtsolution"/>
     <input type="hidden" id="founddate"/>
 
-    <hr>
     <input type="hidden" id="id"/>
 
     <input type="hidden" id="id-add"/>
@@ -41,16 +40,26 @@
     <input type="hidden" id="cate" value="Logic"/>
 
     <div id="newBug" style = "display: none">
-      New bug name: <input type="text" id="new"required><br>
-      New description: <input type="text" id="desc"/><br>
-      Category: <select id="cate" onchange="Catego(this)">
+      <hr>
+      <div class="form-group">
+        <label for="usr">New bug name:</label>
+        <input type="text" class="form-control" placeholder="Bug name" id="new" required>
+      </div>
+
+      <div class="form-group">
+        <label for="usr">New description:</label>
+        <input type="text" class="form-control" placeholder="Bug description" id="desc" required>
+      </div>
+      Category: <select  class="selectpicker" id="cate" onchange="Catego(this)">
         <option value = 'Logic'>Logic </option>
         <option value = 'Dont understand spec'>Don't understand spec </option>
         <option value = 'Dont know tech'>Don't know tech </option>
         <option value = 'Carelessness'>Carelessness</option>
       </select><br>
 
-      <input type="submit" class="btn btn-success" value="Add" onclick="PostBug()"/>
+      <div align="center">
+          <input type="submit" class="btn btn-success" value="Add" onclick="PostBug()"/>
+      </div>
     <div>
 
     <h4 id="code" align="center" style="color: red;display:none;"> Bug name is empty! </h4>

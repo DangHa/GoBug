@@ -38,13 +38,25 @@
 
     <input type="hidden" id="id-add"/>
 
-    <div align="center">
-      New project name: <input type="text" id="new"/><br>
-      New description: <input type="text" id="desc"/><br>
-      Begin date: <input type="date" id="begin"/><br>
-      Finish date: <input type="date" id="finish"/><br>
+    <div>
+      <div class="form-group">
+        <label for="usr">New project name:</label>
+        <input type="text" class="form-control" placeholder="Project name" id="new" required>
+      </div>
+      <div class="form-group">
+        <label for="usr">New description:</label>
+        <input type="text" class="form-control" placeholder="Project description" id="desc" required>
+      </div>
+      <div class="form-group">
+        <label for="usr">Begin date:</label>
+        <input type="date" class="form-control" id="begin" required>
+        <label for="usr">Finish date:</label>
+        <input type="date" class="form-control" id="finish" required>
+      </div>
 
-      <input type="submit" class="btn btn-success" value="Add project" onclick="PostProject()"/>
+      <div align="center">
+          <input type="submit" class="btn btn-success" value="Add project" onclick="PostProject()"/>
+      </div>
     </div>
 
   </body>

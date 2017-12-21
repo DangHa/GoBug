@@ -34,8 +34,15 @@
 
 
     <input type="hidden" id="posit" value ="Developer"/>
-    New member name:  <input type="text" id="newName" required><br>
-    New member email: <input type="text" id="new" required><br>
+
+    <div class="form-group">
+      <label for="usr">New member name:</label>
+      <input type="text" class="form-control" placeholder="Member name" id="newName" required>
+    </div>
+    <div class="form-group">
+      <label for="usr">New member email:</label>
+      <input type="text" class="form-control" placeholder="Member email" id="new" required>
+    </div>
     Position: <select id="pos" onchange="Positi(this)">
       <option value= 'Developer'>Developer</option>
       <option value= 'Tester'>Tester</option>

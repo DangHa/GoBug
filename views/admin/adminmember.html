@@ -43,10 +43,15 @@
       <label for="usr">New member email:</label>
       <input type="text" class="form-control" placeholder="Member email" id="new" required>
     </div>
-    Position: <select id="pos" onchange="Positi(this)">
+    <strong>Position:  </strong> <select id="pos" onchange="Positi(this)">
       <option value= 'Developer'>Developer</option>
       <option value= 'Tester'>Tester</option>
     </select><br>
-    <input type="submit" class="btn btn-success" value="Add" onclick="PostMember()"/>
+    <div align="center">
+        <input type="submit" class="btn btn-success" value="Add member" onclick="PostMember()"/>
+    </div>
+
+    <br>
+    <br>
   </body>
 <html>

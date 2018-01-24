@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title>Go Bug</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/js/adminMember.js"></script>
+    <script src="../static/js/logout.js"></script>
+  <head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">GoBug</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:8080/loginAdmin/">ProJect</a></li>
+          <li class="active"><a href="#">Member</a></li>
+          <li><a href="http://localhost:8080/adminstat/">Statistics</a></li>
+          <li align="right" ><a onclick="LogOut()" href="http://localhost:8080/">Log out</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <table class="table table-hover" id="memberTable"></table><br>
+
+    <hr>
+
+    <input type="hidden" id="id"/>
+    <input type="hidden" id="email"/>
+    <input type="hidden" id="position"/>
+
+
+    <input type="hidden" id="posit" value ="Developer"/>
+
+    <div class="form-group">
+      <label for="usr">New member name:</label>
+      <input type="text" class="form-control" placeholder="Member name" id="newName" required>
+    </div>
+    <div class="form-group">
+      <label for="usr">New member email:</label>
+      <input type="text" class="form-control" placeholder="Member email" id="new" required>
+    </div>
+    <strong>Position:  </strong> <select id="pos" onchange="Positi(this)">
+      <option value= 'Developer'>Developer</option>
+      <option value= 'Tester'>Tester</option>
+    </select><br>
+    <div align="center">
+        <input type="submit" class="btn btn-success" value="Add member" onclick="PostMember()"/>
+    </div>
+
+    <br>
+    <br>
+  </body>
+<html>

@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>Go Bug</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Go Bug</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:8080/">Log In</a></li>
+          <li class="active"><a href="#">Sign Up</a></li>
+        </ul>
+      </div>
+    </nav>
+    <br>
+
+    <form action="http://localhost:8080/signup/" method="POST">
+      Email: <input type="text" value="" size="30" name="Email" /><br><br>
+      Domain: <input type="text" value="" size="30" name="Domain" /><br><hr>
+      <input type="submit" value="Sign up" />
+    </form>
+
+    <br>
+    <p style="color: gray" align="middle"> Don't exist this email! </p>
+  </body>
+
+<html>

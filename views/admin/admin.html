@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <title>Go Bug</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/js/adminProject.js"></script>
+    <script src="../static/js/logout.js"></script>
+  <head>
+
+  <body>
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">GoBug</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">ProJect</a></li>
+          <li><a href="http://localhost:8080/adminmember/">Member</a></li>
+          <li><a href="http://localhost:8080/adminstat/">Statistics</a></li>
+          <li align="right" ><a onclick="LogOut()" href="http://localhost:8080/">Log out</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <table class="table table-hover" id="projectTable"></table><br>
+    <hr>
+    <table class="table table-hover" id="membersTable" style="display: none"></table><br>
+    <input type="hidden" id="iduser"/><br>
+    <table class="table table-hover" id="addmemberTable" style="display: none"></table><br>
+    <hr>
+
+    <input type="hidden" id="id"/>
+    <input type="hidden" id="project"/>
+    <input type="hidden" id="mieuta"/>
+    <input type="hidden" id="begindate"/>
+    <input type="hidden" id="finishdate"/>
+
+    <input type="hidden" id="id-add"/>
+
+    <div>
+      <div class="form-group">
+        <label for="usr">New project name:</label>
+        <input type="text" class="form-control" placeholder="Project name" id="new" required>
+      </div>
+      <div class="form-group">
+        <label for="usr">New description:</label>
+        <input type="text" class="form-control" placeholder="Project description" id="desc" required>
+      </div>
+      <div class="form-group">
+        <label for="usr">Begin date:</label>
+        <input type="date" class="form-control" id="begin" required>
+        <label for="usr">Finish date:</label>
+        <input type="date" class="form-control" id="finish" required>
+      </div>
+
+      <div align="center">
+          <input type="submit" class="btn btn-success" value="Add project" onclick="PostProject()"/>
+      </div>
+    </div>
+
+  </body>
+<html>

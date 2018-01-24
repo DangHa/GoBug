@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>Go Bug</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../static/js/statTable.js"></script>
+    <script src="../static/js/logout.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">GoBug</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:8080/loginAdmin/">ProJect</a></li>
+          <li><a href="http://localhost:8080/adminmember/">Member</a></li>
+          <li class="active"><a href="#">Statistics</a></li>
+          <li align="right" ><a onclick="LogOut()">Log out</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <table class="table table-hover" id="statTable"></table><br>
+    <hr>
+
+    <div class="container">
+      <div class="btn-group btn-group-justified">
+        <a href="#" class="btn btn-default" onclick="statistic('project')">Projects</a>
+        <a href="#" class="btn btn-default" onclick="statistic('develop')">Developers</a>
+        <a href="#" class="btn btn-default" onclick="statistic('bug')">Categories bug</a>
+      </div>
+    </div>
+
+    <br>
+    <div id="project" style="min-width : 500px; max-width: 900px; height: 450px; margin: 0 auto; display: block"></div><br>
+    <div id="develop" style="min-width: 500px; max-width: 900px; height: 450px; margin: 0 auto; display: none"></div><br>
+    <div id="bug" style="min-width: 500px; max-width: 900px; height: 450px; margin: 0 auto; display: none"></div><br>
+
+    <script>
+      function statistic(nameStatistics) {
+        if (nameStatistics === 'project') {
+          document.getElementById('project').style.display = "block";
+          document.getElementById('bug').style.display = "none";
+          document.getElementById('develop').style.display = "none";
+        }
+        if (nameStatistics === 'develop') {
+          document.getElementById('project').style.display = "none";
+          document.getElementById('bug').style.display = "none";
+          document.getElementById('develop').style.display = "block";
+        }
+        if (nameStatistics === 'bug') {
+          document.getElementById('project').style.display = "none";
+          document.getElementById('develop').style.display = "none";
+          document.getElementById('bug').style.display = "block";
+        }
+      }
+
+    </script>
+
+  </body>
+<html>

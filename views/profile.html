@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Go Bug</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/static/js/logout.js"></script>
+    <script src="/static/js/encode.js"></script>
+  <head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">GoBug</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:8080/login/">ProJects</a></li>
+          <li><a href="http://localhost:8080/user/findbug/">Find bugs</a></li>
+          <li class="active"><a href="#">Your Profile</a></li>
+          <li align="right" ><a onclick="LogOut()">Log out</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <br><br>
+    <form class="form" action="http://localhost:8080/user/profile/" method="POST" name="profileForm" onsubmit="return check()">
+         <div class="form-group">
+           <label for="usr">New name:</label>
+           <input type="text" class="form-control" placeholder="Name" name="Name">
+         </div>
+         <div class="form-group">
+           <label for="pwd">New password:</label>
+           <input type="password" class="form-control" placeholder="New password" name="Password">
+         </div>
+         <div class="form-group">
+           <label for="pwd">New password confirmation:</label>
+           <input type="password" class="form-control" placeholder="New password confirmation" name="PasswordConfirmation">
+         </div>
+         <br>
+         <div align="center">
+             <button type="submit" class="btn btn-info">Update Profile</button>
+         </div>
+    </form>
+
+    <h5 id="code" align="center" style="color: red;display:none;"> Password Confirmation isn't Password!</h5>
+
+  </body>
+<html>

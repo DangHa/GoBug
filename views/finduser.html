@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>Go Bug</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/../static/js/findbug.js"></script>
+    <script src="/../static/js/logout.js"></script>
+  <head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">GoBug</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="http://localhost:8080/login/">ProJects</a></li>
+          <li class="active"><a href="">Find bugs</a></li>
+          <li><a href="http://localhost:8080/user/profile/">Your Profile</a></li>
+          <li align="right" ><a onclick="LogOut()" href="http://localhost:8080/">Log out</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <br>
+    <div align="center">
+      <div class="form-group">
+        <input type="text" class="form-control" id="bugname" placeholder=" Bug Name"><br>
+        <button class="btn" type="button" onclick="CreateBugTable()">Search</button>
+      </div>
+    </div>
+
+    <hr><br>
+    <table class="table table-hover" id="findbug"></table><br>
+
+  </body>
+<html>
